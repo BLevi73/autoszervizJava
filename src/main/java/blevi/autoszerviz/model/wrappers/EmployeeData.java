@@ -48,7 +48,7 @@ public class EmployeeData extends AbstractTableModel {
             case 4 :
                 return employees.get(rowIndex).getPosition();
             default :
-                return rowIndex;
+                return rowIndex + 1;
         }
     }
 }
