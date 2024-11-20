@@ -1,7 +1,10 @@
 package blevi.autoszerviz;
 
+import blevi.autoszerviz.controller.threads.MainThread;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        MainThread graphicsThread = new MainThread();
+        graphicsThread.start();
     }
 }
