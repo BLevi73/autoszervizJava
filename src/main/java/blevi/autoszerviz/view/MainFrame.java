@@ -9,9 +9,11 @@ import javax.swing.JPanel;
 public class MainFrame extends JFrame {
     public MainFrame() {
         JPanel mainPanel = new JPanel();
+        TablesTabbedPane tablesTabbedPane = new TablesTabbedPane();
+        MainToolBar mainToolBar = new MainToolBar(tablesTabbedPane);
         mainPanel.setLayout(new BorderLayout());
-        mainPanel.add(new MainToolBar(), BorderLayout.NORTH);
-        mainPanel.add(new TablesTabbedPane());
+        mainPanel.add(mainToolBar, BorderLayout.NORTH);
+        mainPanel.add(tablesTabbedPane);
         this.add(mainPanel, BorderLayout.CENTER);
         this.add(new MainMenuBar(), BorderLayout.NORTH);
         this.setTitle("Car Mechanic");

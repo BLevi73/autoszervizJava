@@ -1,17 +1,16 @@
 package blevi.autoszerviz.model.wrappers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import blevi.autoszerviz.controller.DataHandler;
 import blevi.autoszerviz.model.datatypes.Employee;
 
 public class EmployeeData extends AbstractTableModel {
-    ArrayList<Employee> employees;
+    private List<Employee> employees;
     public EmployeeData() {
-        employees = new ArrayList<>();
-        employees.add(new Employee("Peti", "06201234567", "dpeti@gmail.com", "Leader"));
-        employees.add(new Employee("Jani", "06209876543", "rjanos07@gmail.com", "Mechanic"));
+        employees = DataHandler.getDatabase().getEmployees();
     }
     @Override
     public int getColumnCount() {
@@ -50,5 +49,9 @@ public class EmployeeData extends AbstractTableModel {
             default :
                 return rowIndex + 1;
         }
+    }
+
+    public void addEmployeeData(Employee employee) {
+        employees.add(employee);
     }
 }

@@ -1,16 +1,16 @@
 package blevi.autoszerviz.model.wrappers;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import blevi.autoszerviz.controller.DataHandler;
 import blevi.autoszerviz.model.datatypes.Client;
 
 public class ClientData extends AbstractTableModel {
-    ArrayList<Client> clients;
+    private List<Client> clients;
     public ClientData() {
-        clients = new ArrayList<>();
-        clients.add(new Client("Feri", "06704564564", "ferenc.a@gmail.com"));
+        clients = DataHandler.getDatabase().getClients();
     }
     @Override
     public int getColumnCount() {
