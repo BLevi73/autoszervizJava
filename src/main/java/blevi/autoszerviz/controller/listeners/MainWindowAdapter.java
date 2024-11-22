@@ -5,10 +5,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JOptionPane;
 
-/**
- * WindowAdapter for the main window, controls the events of the main window
- * @see WindowAdapter
- */
 public class MainWindowAdapter extends WindowAdapter {
     @Override
     public void windowClosing(WindowEvent e) {

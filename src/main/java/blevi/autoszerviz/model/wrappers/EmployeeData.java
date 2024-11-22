@@ -4,13 +4,12 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import blevi.autoszerviz.controller.DataAccessInterface;
 import blevi.autoszerviz.model.datatypes.Employee;
 
 public class EmployeeData extends AbstractTableModel {
     private List<Employee> employees;
-    public EmployeeData() {
-        employees = DataAccessInterface.getDatabase().getEmployees();
+    public EmployeeData(List<Employee> employees) {
+        this.employees = employees;
     }
     @Override
     public int getColumnCount() {

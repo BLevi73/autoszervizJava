@@ -1,7 +1,6 @@
 package blevi.autoszerviz.model.datatypes;
 
 import java.io.Serializable;
-import java.time.Year;
 
 public class Car implements Serializable {
     private String licencePlate;
