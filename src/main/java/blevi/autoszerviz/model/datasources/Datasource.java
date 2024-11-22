@@ -33,5 +33,5 @@ public interface Datasource {
 
     public void write();
 
-    public void load(File filename);
+    public void load(String filepath);
 }
