@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import blevi.autoszerviz.controller.LogicAccessInterface;
 import blevi.autoszerviz.view.TablesTabbedPane;
 
 
@@ -18,19 +19,20 @@ public class AddButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch(tablesTabbedPane.getSelectedIndex()) {
             case 1 :
-                JOptionPane.showInputDialog(tablesTabbedPane, "Add client");
+                String returnValue = JOptionPane.showInputDialog(tablesTabbedPane, "Add client");
+                LogicAccessInterface.getClientsData().addClientData(returnValue);
                 break;
             case 2 :
                 JOptionPane.showInputDialog(tablesTabbedPane, "Add car");
                 break;
             case 3 :
-                JOptionPane.showInputDialog(tablesTabbedPane, "Add motorcycle");
-                break;
-            case 4 :
                 JOptionPane.showInputDialog(tablesTabbedPane, "Add part");
                 break;
+            case 4 :
+                JOptionPane.showInputDialog(tablesTabbedPane, "Add repair");
+                break;
             default :
-                JOptionPane.showInputDialog(tablesTabbedPane, "Add empolyee");
+                JOptionPane.showInputDialog(tablesTabbedPane, "Add employee");
                 break;
         }
     }

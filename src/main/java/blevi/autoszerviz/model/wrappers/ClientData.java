@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import blevi.autoszerviz.controller.DataHandler;
+import blevi.autoszerviz.controller.DataAccessInterface;
 import blevi.autoszerviz.model.datatypes.Client;
 
 public class ClientData extends AbstractTableModel {
     private List<Client> clients;
     public ClientData() {
-        clients = DataHandler.getDatabase().getClients();
+        clients = DataAccessInterface.getDatabase().getClients();
     }
     @Override
     public int getColumnCount() {
@@ -45,5 +45,10 @@ public class ClientData extends AbstractTableModel {
             default :
                 return rowIndex + 1;
         }
+    }
+
+    public void addClientData(String name) {
+        clients.add(new Client("1",name,"06201234567","test@example.com"));
+        fireTableDataChanged();
     }
 }

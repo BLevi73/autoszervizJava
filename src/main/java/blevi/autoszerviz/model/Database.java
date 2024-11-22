@@ -10,11 +10,11 @@ import blevi.autoszerviz.model.datatypes.Employee;
 import blevi.autoszerviz.model.datatypes.Part;
 
 public class Database implements Serializable {
-    String name;
-    ArrayList<Employee> employees;
-    ArrayList<Client> clients;
-    ArrayList<Car> cars;
-    ArrayList<Part> parts;
+    private String name;
+    private ArrayList<Employee> employees;
+    private ArrayList<Client> clients;
+    private ArrayList<Car> cars;
+    private ArrayList<Part> parts;
 
     public Database(String name) {
         this.name = name;
@@ -36,5 +36,13 @@ public class Database implements Serializable {
 
     public List<Client> getClients() {
         return clients;
+    }
+
+    public ArrayList<Car> getCars() {
+        return cars;
+    }
+    
+    public ArrayList<Part> getParts() {
+        return parts;
     }
 }

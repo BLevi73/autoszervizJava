@@ -3,11 +3,13 @@ package blevi.autoszerviz.model.datatypes;
 import java.io.Serializable;
 
 public class Person implements Serializable {
+    private String idNumber;
     private String name;
     private String number;
     private String email;
 
-    public Person(String name, String number, String email) {
+    public Person(String idNumber, String name, String number, String email) {
+        this.idNumber = idNumber;
         this.name = name;
         this.number = number;
         this.email = email;

@@ -5,14 +5,14 @@ import java.util.List;
 
 public class Client extends Person {
 
-    private ArrayList<Vehicle> ownedVehicles;
+    private ArrayList<Car> ownedCars;
 
-    public Client(String name, String number, String email) {
-        super(name, number, email);
-        this.ownedVehicles = new ArrayList<>();
+    public Client(String idNumber, String name, String number, String email) {
+        super(idNumber, name, number, email);
+        this.ownedCars = new ArrayList<>();
     }
 
-    public List<Vehicle> getOwnedVehicles() {
-        return ownedVehicles;
+    public List<Car> getOwnedVehicles() {
+        return ownedCars;
     }
 }
