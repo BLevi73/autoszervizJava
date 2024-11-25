@@ -5,26 +5,46 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 public class FileMenu extends JMenu {
+    JMenuItem newMenuItem;
+    JMenuItem openMenuItem;
+    JMenuItem saveMenuItem;
+    JMenu exportMenu;
+    JMenuItem exportToXMLMenuItem;
+    JMenuItem exportToJSONMenuItem;
+    JMenu importMenu;
+    JMenuItem importFromXMLMenuItem;
+    JMenuItem importFromJSONMenuItem;
+
     public FileMenu() {
-        JMenuItem newDatabase = new JMenuItem("New database...");
-        JMenuItem openDatabase = new JMenuItem("Open");
-        JMenuItem saveDatabase = new JMenuItem("Save");
-        JMenu exportDatabase = new JMenu("Export...");
-        JMenuItem exportToXML = new JMenuItem("as XML");
-        JMenuItem exportToJSON = new JMenuItem("as JSON");
-        JMenu importDatabase = new JMenu("Import...");
-        JMenuItem importFromXML = new JMenuItem("from XML");
-        JMenuItem importFromJSON = new JMenuItem("from JSON");
-        this.add(newDatabase);
-        this.add(openDatabase);
-        this.add(saveDatabase);
+        newMenuItem = new JMenuItem("New database...");
+        openMenuItem = new JMenuItem("Open");
+        saveMenuItem = new JMenuItem("Save");
+        exportMenu = new JMenu("Export...");
+        exportToXMLMenuItem = new JMenuItem("as XML");
+        exportToJSONMenuItem = new JMenuItem("as JSON");
+        importMenu = new JMenu("Import...");
+        importFromXMLMenuItem = new JMenuItem("from XML");
+        importFromJSONMenuItem = new JMenuItem("from JSON");
+        this.add(newMenuItem);
+        this.add(openMenuItem);
+        this.add(saveMenuItem);
         this.add(new JSeparator());
-        exportDatabase.add(exportToXML);
-        exportDatabase.add(exportToJSON);
-        this.add(exportDatabase);
-        importDatabase.add(importFromXML);
-        importDatabase.add(importFromJSON);
-        this.add(importDatabase);
+        exportMenu.add(exportToXMLMenuItem);
+        exportMenu.add(exportToJSONMenuItem);
+        this.add(exportMenu);
+        importMenu.add(importFromXMLMenuItem);
+        importMenu.add(importFromJSONMenuItem);
+        this.add(importMenu);
         this.setText("File");
+    }
+
+    public JMenuItem getNewMenuItem() {
+        return newMenuItem;
+    }
+    public JMenuItem getOpenMenuItem() {
+        return openMenuItem;
+    }
+    public JMenuItem getSaveMenuItem() {
+        return saveMenuItem;
     }
 }

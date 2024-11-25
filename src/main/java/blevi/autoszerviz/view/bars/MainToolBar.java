@@ -1,7 +1,5 @@
 package blevi.autoszerviz.view.bars;
 
-import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -23,8 +21,16 @@ public class MainToolBar extends JToolBar {
         this.add(dataViewButton);
         this.setFloatable(false);
     }
-
-    public void setAddButtonListener(ActionListener listener) {
-        addButton.addActionListener(listener);
+    public JButton getAddButton() {
+        return addButton;
+    }
+    public JButton getRemoveButton() {
+        return removeButton;
+    }
+    public JButton getEditButton() {
+        return editButton;
+    }
+    public JButton getDataViewButton() {
+        return dataViewButton;
     }
 }

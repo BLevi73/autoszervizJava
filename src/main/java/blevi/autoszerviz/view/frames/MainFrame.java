@@ -11,12 +11,14 @@ import blevi.autoszerviz.view.bars.MainMenuBar;
 import blevi.autoszerviz.view.panels.MainPanel;
 
 public class MainFrame extends JFrame {
-    private JPanel mainPanel;
+    private MainPanel mainPanel;
+    private MainMenuBar mainMenuBar;
 
     public MainFrame() {
         mainPanel = new MainPanel();
+        mainMenuBar = new MainMenuBar();
         this.add(mainPanel, BorderLayout.CENTER);
-        this.add(new MainMenuBar(), BorderLayout.NORTH);
+        this.add(mainMenuBar, BorderLayout.NORTH);
         this.addWindowListener(new MainWindowAdapter());
         this.setTitle("Car Mechanic");
         this.setIconImage(new ImageIcon("src/main/resources/icons/appicon-48.png").getImage());
@@ -26,8 +28,12 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
     }
 
-    public JPanel getMainPanel() {
+    public MainPanel getMainPanel() {
         return mainPanel;
+    }
+
+    public MainMenuBar getMainMenuBar() {
+        return mainMenuBar;
     }
     
 }

@@ -1,11 +1,11 @@
 package blevi.autoszerviz.controller.threads;
 
-import blevi.autoszerviz.controller.logic.Controller;
+import blevi.autoszerviz.controller.logic.MainController;
 
 public class AutosaveThread extends Thread {
-    Controller controller;
-    public AutosaveThread(Controller controller) {
-        this.controller = controller;
+    MainController parent;
+    public AutosaveThread(MainController parent) {
+        this.parent = parent;
     }
     @Override
     public void run() {

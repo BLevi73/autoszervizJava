@@ -3,14 +3,14 @@ package blevi.autoszerviz.controller.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import blevi.autoszerviz.controller.logic.Controller;
+import blevi.autoszerviz.controller.logic.MainController;
 
 
 
 
 public class AddButtonListener implements ActionListener {
-    Controller controller;
-    public AddButtonListener(Controller controller) {
+    MainController controller;
+    public AddButtonListener(MainController controller) {
         this.controller = controller;
     }
     @Override

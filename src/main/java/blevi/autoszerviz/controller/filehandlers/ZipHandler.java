@@ -10,7 +10,6 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 import blevi.autoszerviz.model.datasources.Data;
-import blevi.autoszerviz.model.datasources.DataAccessor;
 
 public class ZipHandler {
     private ZipHandler() {
@@ -44,9 +43,9 @@ public class ZipHandler {
             ZipEntry entry = zipFile.getEntry("data.dat");
             ObjectInputStream objectInput = new ObjectInputStream(zipFile.getInputStream(entry));
             Object object = objectInput.readObject();
-            System.out.println(object.getClass().getName());
+            Data data = (Data)object;
             zipFile.close();
-            return new Data();
+            return data;
         } catch (IOException e) {
             e.printStackTrace();
         }

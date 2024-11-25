@@ -8,17 +8,17 @@ import javax.swing.JFileChooser;
 import blevi.autoszerviz.controller.filehandlers.SerializationType;
 import blevi.autoszerviz.controller.logic.MainController;
 
-public class SaveMenuItemListener implements ActionListener {
+public class OpenMenuItemListener implements ActionListener {
     MainController parent;
-    public SaveMenuItemListener(MainController parent) {
+    public OpenMenuItemListener(MainController parent) {
         this.parent = parent;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
-        int returnVal = fileChooser.showSaveDialog(fileChooser);
+        int returnVal = fileChooser.showOpenDialog(fileChooser);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            parent.saveData(fileChooser.getSelectedFile().getAbsolutePath(), SerializationType.ZIP);
+            parent.loadData(fileChooser.getSelectedFile().getAbsolutePath(), SerializationType.ZIP);
         }
     }
 }
