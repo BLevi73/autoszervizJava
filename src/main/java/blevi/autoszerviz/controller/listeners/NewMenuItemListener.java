@@ -5,16 +5,13 @@ import java.awt.event.ActionListener;
 
 import blevi.autoszerviz.controller.logic.MainController;
 
-
-
-
-public class AddButtonListener implements ActionListener {
+public class NewMenuItemListener implements ActionListener {
     MainController parent;
-    public AddButtonListener(MainController parent) {
+    public NewMenuItemListener(MainController parent) {
         this.parent = parent;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        parent.addElementEvent();
+        parent.newData();
     }
 }

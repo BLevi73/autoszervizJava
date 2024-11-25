@@ -52,5 +52,6 @@ public class EmployeeData extends AbstractTableModel {
 
     public void addEmployeeData(Employee employee) {
         employees.add(employee);
+        fireTableDataChanged();
     }
 }
