@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import blevi.autoszerviz.controller.logic.MainController;
 
-public class NewMenuItemListener implements ActionListener {
+public class NewDataListener implements ActionListener {
     MainController parent;
-    public NewMenuItemListener(MainController parent) {
+    public NewDataListener(MainController parent) {
         this.parent = parent;
     }
     @Override

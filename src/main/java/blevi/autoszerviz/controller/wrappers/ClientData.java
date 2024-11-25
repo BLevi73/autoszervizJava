@@ -13,7 +13,7 @@ public class ClientData extends AbstractTableModel {
     }
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
     @Override
     public int getRowCount() {
@@ -23,10 +23,12 @@ public class ClientData extends AbstractTableModel {
     public String getColumnName(int column) {
         switch(column) {
             case 1 :
-                return "Name";
+                return "Identification number";
             case 2 :
-                return "Phone number";
+                return "Name";
             case 3 :
+                return "Phone number";
+            case 4 :
                 return "E-mail address";
             default :
                 return "Index";
@@ -36,10 +38,12 @@ public class ClientData extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch(columnIndex) {
             case 1 :
-                return clients.get(rowIndex).getName();
+                return clients.get(rowIndex).getIdNumber();
             case 2 :
-                return clients.get(rowIndex).getNumber();
+                return clients.get(rowIndex).getName();
             case 3 :
+                return clients.get(rowIndex).getNumber();
+            case 4 :
                 return clients.get(rowIndex).getEmail();
             default :
                 return rowIndex + 1;

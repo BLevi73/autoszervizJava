@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import blevi.autoszerviz.controller.listeners.MainWindowAdapter;
 import blevi.autoszerviz.view.bars.MainMenuBar;

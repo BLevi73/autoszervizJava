@@ -12,6 +12,7 @@ public class TablesTabbedPane extends JTabbedPane {
     JTable partsTable;
     public TablesTabbedPane() {
         employeesTable = new JTable();
+        employeesTable.setAutoCreateRowSorter(true);
         clientsTable = new JTable();
         carsTable = new JTable();
         repairsTable = new JTable();

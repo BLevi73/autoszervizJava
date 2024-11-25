@@ -19,7 +19,7 @@ public class MainToolBar extends JToolBar {
         this.add(removeButton);
         this.add(editButton);
         this.add(dataViewButton);
-        this.setFloatable(false);
+        this.setFloatable(true);
     }
     public JButton getAddButton() {
         return addButton;
