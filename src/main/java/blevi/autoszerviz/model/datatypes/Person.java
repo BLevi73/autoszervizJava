@@ -15,6 +15,10 @@ public class Person implements Serializable {
         this.email = email;
     }
 
+    public String getIdNumber() {
+        return idNumber;
+    }
+
     public String getName() {
         return name;
     }
@@ -25,6 +29,10 @@ public class Person implements Serializable {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
     }
 
     public void setName(String name) {

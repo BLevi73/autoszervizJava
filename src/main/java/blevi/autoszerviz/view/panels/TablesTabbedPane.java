@@ -1,4 +1,4 @@
-package blevi.autoszerviz.view;
+package blevi.autoszerviz.view.panels;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;

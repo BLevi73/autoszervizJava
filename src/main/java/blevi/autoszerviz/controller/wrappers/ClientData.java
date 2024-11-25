@@ -1,4 +1,4 @@
-package blevi.autoszerviz.model.wrappers;
+package blevi.autoszerviz.controller.wrappers;
 
 import java.util.List;
 

@@ -1,13 +1,12 @@
 package blevi.autoszerviz;
 
+import blevi.autoszerviz.controller.logic.Controller;
 import blevi.autoszerviz.controller.threads.AutosaveThread;
-import blevi.autoszerviz.controller.threads.MainThread;
 
 public class Main {
     public static void main(String[] args) {
-        MainThread mainThread = new MainThread();
-        mainThread.start();
-        AutosaveThread autosaveThread = new AutosaveThread();
+        Controller controller = new Controller();
+        AutosaveThread autosaveThread = new AutosaveThread(controller);
         autosaveThread.start();
     }
 }

@@ -1,4 +1,4 @@
-package blevi.autoszerviz.view;
+package blevi.autoszerviz.view.menus;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;

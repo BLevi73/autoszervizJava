@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 public class MainWindowAdapter extends WindowAdapter {
     @Override
     public void windowClosing(WindowEvent e) {
-        int exit = JOptionPane.showConfirmDialog(null , "Do you want to exit?", "Exit", JOptionPane.YES_NO_OPTION);
+        int exit = JOptionPane.showConfirmDialog(null , "Do you want to exit?", "Warning", JOptionPane.YES_NO_OPTION);
         if (exit == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
