@@ -43,10 +43,14 @@ public class ZipHandler {
             ZipEntry entry = zipFile.getEntry("data.dat");
             ObjectInputStream objectInput = new ObjectInputStream(zipFile.getInputStream(entry));
             Object object = objectInput.readObject();
+            if (!object.getClass().equals(Data.class)) {
+                zipFile.close();
+                throw new ClassNotFoundException("The data is not a valid data for the program");
+            }
             Data data = (Data)object;
             zipFile.close();
             return data;
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return new Data();

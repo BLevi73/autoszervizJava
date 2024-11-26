@@ -15,7 +15,7 @@ public class CarData extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 8;
+        return 7;
     }
 
     @Override
@@ -26,44 +26,40 @@ public class CarData extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         switch (column) {
-            case 1:
+            case 0:
                 return "Licence plate";
-            case 2:
+            case 1:
                 return "Model year";
-            case 3:
+            case 2:
                 return "Manufacturer";
-            case 4:
+            case 3:
                 return "Model";
-            case 5:
+            case 4:
                 return "Trim level";
-            case 6:
+            case 5:
                 return "Drivetrain type";
-            case 7:
-                return "Horsepower";
             default:
-                return "Index";
+                return "Horsepower";
         }
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 1:
+            case 0:
                 return cars.get(rowIndex).getLicencePlate();
-            case 2:
+            case 1:
                 return cars.get(rowIndex).getModelYear();
-            case 3:
+            case 2:
                 return cars.get(rowIndex).getManufacturer();
-            case 4:
+            case 3:
                 return cars.get(rowIndex).getModel();
-            case 5:
+            case 4:
                 return cars.get(rowIndex).getTrimLevel();
-            case 6:
+            case 5:
                 return cars.get(rowIndex).getDrivetrainType();
-            case 7:
-                return cars.get(rowIndex).getHorsepower();
             default:
-                return rowIndex + 1;
+                return cars.get(rowIndex).getHorsepower();
         }
     }
 }

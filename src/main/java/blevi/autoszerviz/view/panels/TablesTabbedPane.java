@@ -3,6 +3,7 @@ package blevi.autoszerviz.view.panels;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 
 public class TablesTabbedPane extends JTabbedPane {
     JTable employeesTable;
@@ -13,6 +14,7 @@ public class TablesTabbedPane extends JTabbedPane {
     public TablesTabbedPane() {
         employeesTable = new JTable();
         employeesTable.setAutoCreateRowSorter(true);
+        employeesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         clientsTable = new JTable();
         carsTable = new JTable();
         repairsTable = new JTable();

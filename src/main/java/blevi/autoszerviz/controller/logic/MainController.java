@@ -2,9 +2,7 @@ package blevi.autoszerviz.controller.logic;
 
 import blevi.autoszerviz.controller.filehandlers.SerializationType;
 import blevi.autoszerviz.controller.listeners.*;
-import blevi.autoszerviz.controller.wrappers.CarData;
-import blevi.autoszerviz.controller.wrappers.ClientData;
-import blevi.autoszerviz.controller.wrappers.EmployeeData;
+import blevi.autoszerviz.controller.wrappers.*;
 import blevi.autoszerviz.model.datasources.Data;
 import blevi.autoszerviz.model.datatypes.Employee;
 import blevi.autoszerviz.view.frames.MainFrame;
@@ -15,6 +13,8 @@ public class MainController {
     private EmployeeData employeeData;
     private ClientData clientData;
     private CarData carData;
+    private RepairData repairData;
+    private PartData partData;
     
     public MainController() {
         this.data = new Data();
@@ -26,6 +26,7 @@ public class MainController {
         mainFrame.getMainMenuBar().getFileMenu().getSaveMenuItem().addActionListener(new SaveDataListener(this));
         mainFrame.getMainMenuBar().getFileMenu().getOpenMenuItem().addActionListener(new OpenDataListener(this));
         mainFrame.getMainMenuBar().getFileMenu().getOpenAutosaveMenuItem().addActionListener(new OpenAutosaveListener(this));
+        mainFrame.getMainMenuBar().getFileMenu().getExportToXMLMenuItem().addActionListener(new XMLExportListener(this));
         mainFrame.getMainMenuBar().getViewMenu().getToolBarLock().addActionListener(new LockToolbarListener(this));
         mainFrame.getMainPanel().getMainToolBar().getAddButton().addActionListener(new AddButtonListener(this));
         
@@ -34,6 +35,8 @@ public class MainController {
         mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable().setModel(employeeData);
         mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable().setModel(clientData);
         mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable().setModel(carData);
+        mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().setModel(repairData);
+        mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable().setModel(partData);
     }
 
     private void setupTableModels() {

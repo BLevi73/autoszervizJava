@@ -8,50 +8,51 @@ import blevi.autoszerviz.model.datatypes.Client;
 
 public class ClientData extends AbstractTableModel {
     private List<Client> clients;
+
     public ClientData(List<Client> clients) {
         this.clients = clients;
     }
+
     @Override
     public int getColumnCount() {
         return 5;
     }
+
     @Override
     public int getRowCount() {
         return clients.size();
     }
+
     @Override
     public String getColumnName(int column) {
-        switch(column) {
-            case 1 :
+        switch (column) {
+            case 0:
                 return "Identification number";
-            case 2 :
+            case 1:
                 return "Name";
-            case 3 :
+            case 2:
                 return "Phone number";
-            case 4 :
+            default:
                 return "E-mail address";
-            default :
-                return "Index";
-        }
-    }
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        switch(columnIndex) {
-            case 1 :
-                return clients.get(rowIndex).getIdNumber();
-            case 2 :
-                return clients.get(rowIndex).getName();
-            case 3 :
-                return clients.get(rowIndex).getNumber();
-            case 4 :
-                return clients.get(rowIndex).getEmail();
-            default :
-                return rowIndex + 1;
         }
     }
 
-    public void addClientData(String name) {
-        clients.add(new Client("1",name,"06201234567","test@example.com"));
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return clients.get(rowIndex).getIdNumber();
+            case 1:
+                return clients.get(rowIndex).getName();
+            case 2:
+                return clients.get(rowIndex).getNumber();
+            default:
+                return clients.get(rowIndex).getEmail();
+        }
+    }
+
+    public void addClientData(Client client) {
+        clients.add(client);
         fireTableDataChanged();
     }
 }

@@ -54,4 +54,10 @@ public class FileMenu extends JMenu {
     public JMenuItem getOpenAutosaveMenuItem() {
         return openAutosaveMenuItem;
     }
+    public JMenuItem getExportToXMLMenuItem() {
+        return exportToXMLMenuItem;
+    }
+    public JMenuItem getExportToJSONMenuItem() {
+        return exportToJSONMenuItem;
+    }
 }

@@ -5,14 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Repair implements Serializable {
+    private String repairId;
     private String description;
     private int cost;
     private ArrayList<Part> usedParts;
 
-    public Repair(String description, int cost) {
+    public Repair(String repairId, String description, int cost) {
+        this.repairId = repairId;
         this.description = description;
         this.cost = cost;
         this.usedParts = new ArrayList<>();
+    }
+
+    public String getRepairId() {
+        return repairId;
     }
 
     public String getDescription() {
