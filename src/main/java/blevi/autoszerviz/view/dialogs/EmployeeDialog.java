@@ -4,14 +4,14 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class AddEmployeeDialog extends JOptionPane {
+public class EmployeeDialog {
     private static JFormattedTextField idNumberInputField;
     private static JFormattedTextField nameInputField;
     private static JFormattedTextField phoneNumberInputField;
     private static JFormattedTextField emailInputField;
     private static JFormattedTextField positionInputField;
 
-    private AddEmployeeDialog() {
+    private EmployeeDialog() {
         throw new IllegalStateException();
     }
 

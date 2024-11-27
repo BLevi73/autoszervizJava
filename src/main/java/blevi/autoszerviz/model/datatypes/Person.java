@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Person implements Serializable {
     private String idNumber;
     private String name;
-    private String number;
+    private String phoneNumber;
     private String email;
 
-    public Person(String idNumber, String name, String number, String email) {
+    public Person(String idNumber, String name, String phoneNumber, String email) {
         this.idNumber = idNumber;
         this.name = name;
-        this.number = number;
+        this.phoneNumber = phoneNumber;
         this.email = email;
     }
 
@@ -23,8 +23,8 @@ public class Person implements Serializable {
         return name;
     }
 
-    public String getNumber() {
-        return number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getEmail() {
@@ -39,8 +39,8 @@ public class Person implements Serializable {
         this.name = name;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     public void setEmail(String email) {

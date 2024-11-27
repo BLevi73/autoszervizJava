@@ -6,7 +6,7 @@ public class RepairData extends AbstractTableModel {
     @Override
     public int getColumnCount() {
         // TODO Auto-generated method stub
-        return 0;
+        return 4;
     }
     @Override
     public int getRowCount() {

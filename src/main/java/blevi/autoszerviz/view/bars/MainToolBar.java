@@ -5,20 +5,23 @@ import javax.swing.JButton;
 import javax.swing.JToolBar;
 
 public class MainToolBar extends JToolBar {
-    JButton addButton = new JButton(new ImageIcon("src/main/resources/icons/plus-48.png"));
-    JButton removeButton = new JButton(new ImageIcon("src/main/resources/icons/minus-48.png"));
-    JButton editButton = new JButton(new ImageIcon("src/main/resources/icons/pencil-2-48.png"));
-    JButton dataViewButton = new JButton(new ImageIcon("src/main/resources/icons/copywriting-48.png"));
+    JButton addButton;
+    JButton removeButton;
+    JButton editButton;
+    JButton dataViewButton;
+    JButton queryButton;
 
     public MainToolBar() {
         addButton = new JButton(new ImageIcon("src/main/resources/icons/plus-48.png"));
         removeButton = new JButton(new ImageIcon("src/main/resources/icons/minus-48.png"));
         editButton = new JButton(new ImageIcon("src/main/resources/icons/pencil-2-48.png"));
         dataViewButton = new JButton(new ImageIcon("src/main/resources/icons/copywriting-48.png"));
+        queryButton = new JButton(new ImageIcon("src/main/resources/icons/search-13-48.png"));
         this.add(addButton);
         this.add(removeButton);
         this.add(editButton);
         this.add(dataViewButton);
+        this.add(queryButton);
         this.setFloatable(true);
     }
     public JButton getAddButton() {
@@ -32,5 +35,8 @@ public class MainToolBar extends JToolBar {
     }
     public JButton getDataViewButton() {
         return dataViewButton;
+    }
+    public JButton getQueryButton() {
+        return queryButton;
     }
 }

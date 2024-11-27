@@ -45,7 +45,7 @@ public class ClientData extends AbstractTableModel {
             case 1:
                 return clients.get(rowIndex).getName();
             case 2:
-                return clients.get(rowIndex).getNumber();
+                return clients.get(rowIndex).getPhoneNumber();
             default:
                 return clients.get(rowIndex).getEmail();
         }
