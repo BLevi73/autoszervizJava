@@ -163,6 +163,17 @@ public class MainController {
     }
 
     public void createClientQuery() {
-
+        int returnVal = ClientQueryDialog.showClientQueryDialog();
+        Client filter;
+        ClientData filteredData;
+        if (returnVal == JOptionPane.YES_OPTION) {
+            filter = new Client(ClientQueryDialog.getIdNumberInputField().getText(),
+                    ClientQueryDialog.getNameInputField().getText(),
+                    ClientQueryDialog.getPhoneNumberInputField().getText(),
+                    ClientQueryDialog.getEmailInputField().getText());
+            filteredData = new ClientData(clientData.getFilteredData(filter));
+            QueryFrame queryFrame = new QueryFrame();
+            queryFrame.getTable().setModel(filteredData);
+        }
     }
 }

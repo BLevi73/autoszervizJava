@@ -1,10 +1,12 @@
 package blevi.autoszerviz.controller.wrappers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
 import blevi.autoszerviz.model.datatypes.Client;
+import blevi.autoszerviz.view.dialogs.ClientQueryDialog;
 
 public class ClientData extends AbstractTableModel {
     private List<Client> clients;
@@ -54,5 +56,80 @@ public class ClientData extends AbstractTableModel {
     public void addClientData(Client client) {
         clients.add(client);
         fireTableDataChanged();
+    }
+
+    public List<Client> getFilteredData(Client filter) {
+        List<Client> filteredData = new ArrayList<>();
+        boolean idNumberFilterFlag;
+        boolean nameFilterFlag;
+        boolean phoneNumberFilterFlag;
+        boolean emailFilterFlag;
+        for (Client clientElement : clients) {
+            idNumberFilterFlag = evaluateIdNumberFilter(clientElement, filter);
+            nameFilterFlag = evaluateNameFilter(clientElement, filter);
+            phoneNumberFilterFlag = evaluatePhoneNumberFilter(clientElement, filter);
+            emailFilterFlag = evaluateEmailFilter(clientElement, filter);
+            if (idNumberFilterFlag && nameFilterFlag && phoneNumberFilterFlag && emailFilterFlag) {
+                filteredData.add(clientElement);
+            }
+        }
+        return filteredData;
+    }
+
+    private boolean evaluateIdNumberFilter(Client element, Client filter) {
+        if (filter.getIdNumber().isBlank()) {
+            return true;
+        } else {
+            switch (ClientQueryDialog.getIdNumberOrdering()) {
+                case 1:
+                    return element.getIdNumber().compareTo(filter.getIdNumber()) < 0;
+                case 2:
+                    return element.getIdNumber().compareTo(filter.getIdNumber()) > 0;
+                default:
+                    return element.getIdNumber().compareTo(filter.getIdNumber()) == 0;
+            }
+        }
+    }
+    private boolean evaluateNameFilter(Client element, Client filter) {
+        if (filter.getName().isBlank()) {
+            return true;
+        } else {
+            switch (ClientQueryDialog.getNameOrdering()) {
+                case 1:
+                    return element.getName().compareTo(filter.getName()) < 0;
+                case 2:
+                    return element.getName().compareTo(filter.getName()) > 0;
+                default:
+                    return element.getName().compareTo(filter.getName()) == 0;
+            }
+        }
+    }
+    private boolean evaluatePhoneNumberFilter(Client element, Client filter) {
+        if (filter.getPhoneNumber().isBlank()) {
+            return true;
+        } else {
+            switch (ClientQueryDialog.getPhoneNumberOrdering()) {
+                case 1:
+                    return element.getPhoneNumber().compareTo(filter.getPhoneNumber()) < 0;
+                case 2:
+                    return element.getPhoneNumber().compareTo(filter.getPhoneNumber()) > 0;
+                default:
+                    return element.getPhoneNumber().compareTo(filter.getPhoneNumber()) == 0;
+            }
+        }
+    }
+    private boolean evaluateEmailFilter(Client element, Client filter) {
+        if (filter.getEmail().isBlank()) {
+            return true;
+        } else {
+            switch (ClientQueryDialog.getEmailOrdering()) {
+                case 1:
+                    return element.getEmail().compareTo(filter.getEmail()) < 0;
+                case 2:
+                    return element.getEmail().compareTo(filter.getEmail()) > 0;
+                default:
+                    return element.getEmail().compareTo(filter.getEmail()) == 0;
+            }
+        }
     }
 }
