@@ -9,6 +9,11 @@ public class Main {
     public static void main(String[] args) {
         Data data = new Data();
         ProgramConfig programConfig = new ProgramConfig();
+        try {
+            programConfig.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         MainThread mainThread = new MainThread(data, programConfig);
         mainThread.start();
         AutosaveThread autosaveThread = new AutosaveThread(data, programConfig);

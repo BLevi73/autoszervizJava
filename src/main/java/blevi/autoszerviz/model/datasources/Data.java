@@ -1,5 +1,6 @@
 package blevi.autoszerviz.model.datasources;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import blevi.autoszerviz.model.datatypes.Part;
 import blevi.autoszerviz.model.datatypes.Repair;
 
 public class Data implements DataAccessor, Serializable {
-    boolean isLoading;
+    private static boolean isLocked = false;
     private ArrayList<Employee> employees;
     private ArrayList<Client> clients;
     private ArrayList<Car> cars;
@@ -21,14 +22,20 @@ public class Data implements DataAccessor, Serializable {
     private ArrayList<Part> parts;
 
     public Data() {
-        isLoading = false;
         employees = new ArrayList<>();
         clients = new ArrayList<>();
         cars = new ArrayList<>();
         repairs = new ArrayList<>();
         parts = new ArrayList<>();
     }
-    
+
+    public static boolean isLocked() {
+        return isLocked;
+    }
+    public static void setLocked(boolean isLocked) {
+        Data.isLocked = isLocked;
+    }
+
     @Override
     public List<Employee> getEmployees() {
         return employees;
@@ -54,9 +61,25 @@ public class Data implements DataAccessor, Serializable {
         return parts;
     }
 
+    public void setEmployees(List<Employee> employees) {
+        this.employees = new ArrayList<>(employees);
+    }
+    public void setClients(List<Client> clients) {
+        this.clients = new ArrayList<>(clients);
+    }
+    public void setCars(List<Car> cars) {
+        this.cars = new ArrayList<>(cars);
+    }
+    public void setRepairs(List<Repair> repairs) {
+        this.repairs = new ArrayList<>(repairs);
+    }
+    public void setParts(List<Part> parts) {
+        this.parts = new ArrayList<>(parts);
+    }
+
     @Override
     public void addEmployee(Employee employee) {
-        employees.add(employee);        
+        employees.add(employee);
     }
 
     @Override
@@ -80,13 +103,22 @@ public class Data implements DataAccessor, Serializable {
     }
 
     @Override
-    public void write(String filepath, SerializationType type) {
+    public synchronized void write(String filepath, SerializationType type) {
+        while (isLocked) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        setLocked(true);
         switch (type) {
             case ZIP:
                 try {
                     ZipHandler.writeToZip(this, filepath);
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
+                    setLocked(false);
                 }
                 break;
             case XML:
@@ -94,20 +126,37 @@ public class Data implements DataAccessor, Serializable {
             default:
                 break;
         }
-        
+        setLocked(false);
+        notifyAll();
     }
 
     @Override
-    public void load(String filepath, SerializationType type) {
-        try {
-            Data data = ZipHandler.loadFromZip(filepath);
-            this.employees = new ArrayList<>(data.getEmployees());
-            this.clients = new ArrayList<>(data.getClients());
-            this.cars = new ArrayList<>(data.getCars());
-            this.repairs = new ArrayList<>(data.getRepairs());
-            this.parts = new ArrayList<>(data.getParts());
-        } catch (Exception e) {
-            e.printStackTrace();
+    public synchronized void load(String filepath, SerializationType type) {
+        while (isLocked) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
+        setLocked(true);
+        switch (type) {
+            case ZIP:
+                try {
+                    Data tmp = ZipHandler.loadFromZip(filepath);
+                    this.setEmployees(tmp.getEmployees());
+                    this.setClients(tmp.getClients());
+                    this.setCars(tmp.getCars());
+                    this.setRepairs(tmp.getRepairs());
+                    this.setParts(tmp.getParts());
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
+            default:
+                break;
+        }
+        setLocked(false);
+        notifyAll();
     }
 }

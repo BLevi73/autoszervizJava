@@ -1,5 +1,7 @@
 package blevi.autoszerviz.controller.threads;
 
+import java.time.LocalDateTime;
+
 import blevi.autoszerviz.controller.filehandlers.SerializationType;
 import blevi.autoszerviz.controller.logic.ProgramConfig;
 import blevi.autoszerviz.model.datasources.Data;
@@ -18,11 +20,10 @@ public class AutosaveThread extends Thread {
             try {
                 Thread.sleep(programConfig.getAutosaveInterval());
                 data.write(System.getProperty("user.home") + "/autosave.zip", SerializationType.ZIP);
-                System.out.println(this.getName());
+                System.out.println("Autosave event happened at: " + LocalDateTime.now());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-            
         }
     }
 }

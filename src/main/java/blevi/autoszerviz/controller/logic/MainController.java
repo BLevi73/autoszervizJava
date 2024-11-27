@@ -20,15 +20,11 @@ public class MainController {
     private RepairData repairData;
     private PartData partData;
 
-    public MainController(Data data) {
-        this.programConfig = new ProgramConfig();
+    public MainController(Data data, ProgramConfig programConfig) {
+        this.programConfig = programConfig;
         this.data = data;
     }
-
-    public Data getData() {
-        return data;
-    }
-
+    
     public MainFrame getMainFrame() {
         return mainFrame;
     }

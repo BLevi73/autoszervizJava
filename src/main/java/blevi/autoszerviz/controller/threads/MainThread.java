@@ -14,7 +14,7 @@ public class MainThread extends Thread {
     }
     @Override
     public void run() {
-        MainController controller = new MainController(data);
+        MainController controller = new MainController(data, programConfig);
         controller.init();
     }
 }
