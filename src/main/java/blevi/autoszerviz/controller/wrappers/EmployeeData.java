@@ -17,7 +17,7 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
 
     @Override
     public int getColumnCount() {
-        return 6;
+        return 5;
     }
 
     @Override
@@ -28,36 +28,36 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
     @Override
     public String getColumnName(int column) {
         switch (column) {
-            case 1:
+            case 0:
                 return "Identification number";
-            case 2:
+            case 1:
                 return "Name";
-            case 3:
+            case 2:
                 return "Phone number";
-            case 4:
+            case 3:
                 return "E-mail address";
-            case 5:
-                return "Position";
             default:
-                return "Index";
+                return "Position";
         }
+    }
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return String.class;
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
-            case 1:
+            case 0:
                 return employees.get(rowIndex).getIdNumber();
-            case 2:
+            case 1:
                 return employees.get(rowIndex).getName();
-            case 3:
+            case 2:
                 return employees.get(rowIndex).getPhoneNumber();
-            case 4:
+            case 3:
                 return employees.get(rowIndex).getEmail();
-            case 5:
-                return employees.get(rowIndex).getPosition();
             default:
-                return rowIndex + 1;
+                return employees.get(rowIndex).getPosition();
         }
     }
 

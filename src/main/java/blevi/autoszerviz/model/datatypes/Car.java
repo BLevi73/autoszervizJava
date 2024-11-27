@@ -7,16 +7,16 @@ public class Car implements Serializable {
     private int modelYear;
     private String manufacturer;
     private String model;
-    private String trimLevel;
+    private String chassisType;
     private String drivetrainType;
     private int horsepower;
 
-    public Car(String licencePlate, int modelYear, String manufacturer, String model, String trimlevel, String drivetrainType, int horsepower) {
+    public Car(String licencePlate, int modelYear, String manufacturer, String model, String chassisType, String drivetrainType, int horsepower) {
         this.licencePlate = licencePlate;
         this.modelYear = modelYear;
         this.manufacturer = manufacturer;
         this.model = model;
-        this.trimLevel = trimlevel;
+        this.chassisType = chassisType;
         this.drivetrainType = drivetrainType;
         this.horsepower = horsepower;
     }
@@ -37,8 +37,8 @@ public class Car implements Serializable {
         return model;
     }
 
-    public String getTrimLevel() {
-        return trimLevel;
+    public String getChassisType() {
+        return chassisType;
     }
 
     public String getDrivetrainType() {

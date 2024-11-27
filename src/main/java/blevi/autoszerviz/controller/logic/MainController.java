@@ -11,7 +11,9 @@ import blevi.autoszerviz.view.dialogs.*;
 import blevi.autoszerviz.view.frames.*;
 
 public class MainController {
+    private ProgramConfig programConfig;
     private Data data;
+    private boolean dataLock;
     private MainFrame mainFrame;
     private EmployeeData employeeData;
     private ClientData clientData;
@@ -20,8 +22,30 @@ public class MainController {
     private PartData partData;
 
     public MainController() {
+        this.programConfig = new ProgramConfig();
         this.data = new Data();
+        dataLock = false;
         this.mainFrame = new MainFrame();
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public boolean getDataLock() {
+        return dataLock;
+    }
+
+    public void setDataLock(boolean dataLock) {
+        this.dataLock = dataLock;
+    }
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
+
+    public ProgramConfig getProgramConfig() {
+        return programConfig;
     }
 
     private void setupListeners() {
@@ -30,12 +54,16 @@ public class MainController {
         mainFrame.getMainMenuBar().getFileMenu().getOpenMenuItem().addActionListener(new OpenDataListener(this));
         mainFrame.getMainMenuBar().getFileMenu().getOpenAutosaveMenuItem()
                 .addActionListener(new OpenAutosaveListener(this));
+        mainFrame.getMainMenuBar().getFileMenu().getOpenExampleItem().addActionListener(new OpenExampleListener(this));
         mainFrame.getMainMenuBar().getFileMenu().getExportToXMLMenuItem()
                 .addActionListener(new XMLExportListener(this));
+        mainFrame.getMainMenuBar().getFileMenu().getExportToJSONMenuItem()
+                .addActionListener(new JSONExportListener(this));
         mainFrame.getMainMenuBar().getViewMenu().getToolBarLock().addActionListener(new LockToolbarListener(this));
+        mainFrame.getMainMenuBar().getSettingsMenu().getPreferencesItem()
+                .addActionListener(new PreferencesListener(this));
         mainFrame.getMainPanel().getMainToolBar().getAddButton().addActionListener(new AddButtonListener(this));
         mainFrame.getMainPanel().getMainToolBar().getQueryButton().addActionListener(new QueryButtonListener(this));
-
     }
 
     private void setupTables() {
@@ -60,23 +88,28 @@ public class MainController {
 
     public void newData() {
         data = new Data();
+        mainFrame.getMainPanel().getMainInfoBar().getCurrentFileLabel().setText("-");
+        mainFrame.getMainPanel().getMainInfoBar().getNumberOfEmployeesLabel().setText("0");
         this.setupTableModels();
         this.setupTables();
     }
 
     public void saveData(String filepath, SerializationType type) {
-        synchronized (data) {
-            data.write(filepath, type);
-        }
+        data.write(filepath, type);
+        mainFrame.getMainPanel().getMainInfoBar().getCurrentFileLabel().setText(filepath);
     }
 
     public void loadData(String filepath, SerializationType type) {
-        synchronized (data) {
-            data.load(filepath, type);
-        }
+        data.load(filepath, type);
         mainFrame.getMainPanel().getMainInfoBar().getCurrentFileLabel().setText(filepath);
+        mainFrame.getMainPanel().getMainInfoBar().getNumberOfEmployeesLabel()
+                .setText(Integer.toString(data.getEmployees().size()));
         this.setupTableModels();
         this.setupTables();
+    }
+
+    public void openPreferences() {
+        PreferencesFrame preferencesFrame = new PreferencesFrame();
     }
 
     public void addEmployee() {
@@ -90,7 +123,18 @@ public class MainController {
                         EmployeeDialog.getPositionInputField().getText()));
             }
         }
+    }
 
+    public void addClient() {
+        int returnVal = ClientDialog.showAddClientDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            synchronized (data) {
+                clientData.addClientData(new Client(ClientDialog.getIdNumberInputField().getText(),
+                        ClientDialog.getNameInputField().getText(),
+                        ClientDialog.getPhoneNumberInputField().getText(),
+                        ClientDialog.getEmailInputField().getText()));
+            }
+        }
     }
 
     public int getOpenedTab() {
@@ -119,6 +163,6 @@ public class MainController {
     }
 
     public void createClientQuery() {
-        
+
     }
 }

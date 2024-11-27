@@ -35,7 +35,7 @@ public class CarData extends AbstractTableModel {
             case 3:
                 return "Model";
             case 4:
-                return "Trim level";
+                return "Chassis type";
             case 5:
                 return "Drivetrain type";
             default:
@@ -55,7 +55,7 @@ public class CarData extends AbstractTableModel {
             case 3:
                 return cars.get(rowIndex).getModel();
             case 4:
-                return cars.get(rowIndex).getTrimLevel();
+                return cars.get(rowIndex).getChassisType();
             case 5:
                 return cars.get(rowIndex).getDrivetrainType();
             default:

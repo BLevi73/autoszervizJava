@@ -19,7 +19,7 @@ public class OpenDataListener implements ActionListener {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileNameExtensionFilter("ZIP Archive", "zip"));
         fileChooser.setAcceptAllFileFilterUsed(false);
-        int returnVal = fileChooser.showOpenDialog(fileChooser);
+        int returnVal = fileChooser.showOpenDialog(parent.getMainFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             parent.loadData(fileChooser.getSelectedFile().getAbsolutePath(), SerializationType.ZIP);
         }

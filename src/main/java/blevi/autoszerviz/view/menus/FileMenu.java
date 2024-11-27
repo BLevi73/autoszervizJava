@@ -9,6 +9,7 @@ public class FileMenu extends JMenu {
     JMenuItem openMenuItem;
     JMenuItem saveMenuItem;
     JMenuItem openAutosaveMenuItem;
+    JMenuItem openExampleItem;
     JMenu exportMenu;
     JMenuItem exportToXMLMenuItem;
     JMenuItem exportToJSONMenuItem;
@@ -21,6 +22,7 @@ public class FileMenu extends JMenu {
         openMenuItem = new JMenuItem("Open");
         saveMenuItem = new JMenuItem("Save");
         openAutosaveMenuItem = new JMenuItem("Open autosaved data");
+        openExampleItem = new JMenuItem("Open example data");
         exportMenu = new JMenu("Export...");
         exportToXMLMenuItem = new JMenuItem("as XML");
         exportToJSONMenuItem = new JMenuItem("as JSON");
@@ -32,6 +34,7 @@ public class FileMenu extends JMenu {
         this.add(saveMenuItem);
         this.add(new JSeparator());
         this.add(openAutosaveMenuItem);
+        this.add(openExampleItem);
         this.add(new JSeparator());
         exportMenu.add(exportToXMLMenuItem);
         exportMenu.add(exportToJSONMenuItem);
@@ -53,6 +56,9 @@ public class FileMenu extends JMenu {
     }
     public JMenuItem getOpenAutosaveMenuItem() {
         return openAutosaveMenuItem;
+    }
+    public JMenuItem getOpenExampleItem() {
+        return openExampleItem;
     }
     public JMenuItem getExportToXMLMenuItem() {
         return exportToXMLMenuItem;

@@ -18,6 +18,9 @@ public class AddButtonListener implements ActionListener {
             case 0:
                 parent.addEmployee();
                 break;
+            case 1:
+                parent.addClient();
+                break;
             default:
                 break;
         }
