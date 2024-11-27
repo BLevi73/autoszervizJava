@@ -1,14 +1,28 @@
 package blevi.autoszerviz.controller.threads;
 
-import blevi.autoszerviz.controller.logic.MainController;
+import blevi.autoszerviz.controller.filehandlers.SerializationType;
+import blevi.autoszerviz.controller.logic.ProgramConfig;
+import blevi.autoszerviz.model.datasources.Data;
 
 public class AutosaveThread extends Thread {
-    MainController parent;
-    public AutosaveThread(MainController parent) {
-        this.parent = parent;
+    private Data data;
+    private ProgramConfig programConfig;
+    public AutosaveThread(Data data, ProgramConfig programConfig) {
+        this.data = data;
+        this.programConfig = programConfig;
+        this.setName("Autosave Thread");
     }
     @Override
     public void run() {
-        
+        while (true) {
+            try {
+                Thread.sleep(programConfig.getAutosaveInterval());
+                data.write(System.getProperty("user.home") + "/autosave.zip", SerializationType.ZIP);
+                System.out.println(this.getName());
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            
+        }
     }
 }

@@ -13,7 +13,6 @@ import blevi.autoszerviz.view.frames.*;
 public class MainController {
     private ProgramConfig programConfig;
     private Data data;
-    private boolean dataLock;
     private MainFrame mainFrame;
     private EmployeeData employeeData;
     private ClientData clientData;
@@ -21,23 +20,13 @@ public class MainController {
     private RepairData repairData;
     private PartData partData;
 
-    public MainController() {
+    public MainController(Data data) {
         this.programConfig = new ProgramConfig();
-        this.data = new Data();
-        dataLock = false;
-        this.mainFrame = new MainFrame();
+        this.data = data;
     }
 
     public Data getData() {
         return data;
-    }
-
-    public boolean getDataLock() {
-        return dataLock;
-    }
-
-    public void setDataLock(boolean dataLock) {
-        this.dataLock = dataLock;
     }
 
     public MainFrame getMainFrame() {
@@ -81,6 +70,7 @@ public class MainController {
     }
 
     public void init() {
+        this.mainFrame = new MainFrame();
         this.setupListeners();
         this.setupTableModels();
         this.setupTables();

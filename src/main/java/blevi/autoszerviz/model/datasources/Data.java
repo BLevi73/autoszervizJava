@@ -13,6 +13,7 @@ import blevi.autoszerviz.model.datatypes.Part;
 import blevi.autoszerviz.model.datatypes.Repair;
 
 public class Data implements DataAccessor, Serializable {
+    boolean isLoading;
     private ArrayList<Employee> employees;
     private ArrayList<Client> clients;
     private ArrayList<Car> cars;
@@ -20,6 +21,7 @@ public class Data implements DataAccessor, Serializable {
     private ArrayList<Part> parts;
 
     public Data() {
+        isLoading = false;
         employees = new ArrayList<>();
         clients = new ArrayList<>();
         cars = new ArrayList<>();
@@ -86,6 +88,8 @@ public class Data implements DataAccessor, Serializable {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+            case XML:
                 break;
             default:
                 break;
