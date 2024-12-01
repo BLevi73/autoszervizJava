@@ -53,9 +53,15 @@ public class ClientData extends AbstractTableModel {
         }
     }
 
-    public void addClientData(Client client) {
+    public boolean addClient(Client client) {
+        for (Client element : clients) {
+            if(element.equals(client)) {
+                return false;
+            }
+        }
         clients.add(client);
         fireTableDataChanged();
+        return true;
     }
 
     public List<Client> getFilteredData(Client filter) {

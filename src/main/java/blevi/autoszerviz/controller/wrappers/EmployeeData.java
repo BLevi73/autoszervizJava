@@ -8,7 +8,7 @@ import javax.swing.table.AbstractTableModel;
 import blevi.autoszerviz.model.datatypes.Employee;
 import blevi.autoszerviz.view.dialogs.EmployeeQueryDialog;
 
-public class EmployeeData extends AbstractTableModel implements Filterable<Employee> {
+public class EmployeeData extends AbstractTableModel {
     private List<Employee> employees;
 
     public EmployeeData(List<Employee> employees) {
@@ -40,6 +40,7 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
                 return "Position";
         }
     }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return String.class;
@@ -61,12 +62,12 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
         }
     }
 
-    public void addEmployeeData(Employee employee) {
-        employees.add(employee);
+    public void removeEmployee(Employee employee) {
+        employees.remove(employee);
         fireTableDataChanged();
     }
 
-    public List<Employee> getFilteredData(Employee filter) {
+    public EmployeeData getFilteredData(Employee filter) {
         List<Employee> filteredData = new ArrayList<>();
         boolean idNumberFilterFlag;
         boolean nameFilterFlag;
@@ -79,11 +80,12 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
             phoneNumberFilterFlag = evaluatePhoneNumberFilter(employeeElement, filter);
             emailFilterFlag = evaluateEmailFilter(employeeElement, filter);
             positionFilterFlag = evaluatePositionFilter(employeeElement, filter);
-            if (idNumberFilterFlag && nameFilterFlag && phoneNumberFilterFlag && emailFilterFlag && positionFilterFlag) {
+            if (idNumberFilterFlag && nameFilterFlag && phoneNumberFilterFlag && emailFilterFlag
+                    && positionFilterFlag) {
                 filteredData.add(employeeElement);
             }
         }
-        return filteredData;
+        return new EmployeeData(filteredData);
     }
 
     private boolean evaluateIdNumberFilter(Employee element, Employee filter) {
@@ -100,6 +102,7 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
             }
         }
     }
+
     private boolean evaluateNameFilter(Employee element, Employee filter) {
         if (filter.getName().isBlank()) {
             return true;
@@ -114,6 +117,7 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
             }
         }
     }
+
     private boolean evaluatePhoneNumberFilter(Employee element, Employee filter) {
         if (filter.getPhoneNumber().isBlank()) {
             return true;
@@ -128,6 +132,7 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
             }
         }
     }
+
     private boolean evaluateEmailFilter(Employee element, Employee filter) {
         if (filter.getEmail().isBlank()) {
             return true;
@@ -142,6 +147,7 @@ public class EmployeeData extends AbstractTableModel implements Filterable<Emplo
             }
         }
     }
+
     private boolean evaluatePositionFilter(Employee element, Employee filter) {
         if (filter.getPosition().isBlank()) {
             return true;

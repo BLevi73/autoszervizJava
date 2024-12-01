@@ -46,4 +46,15 @@ public class Person implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Person)) {
+            return false;
+        }
+        Person casted = (Person)obj;
+        return this.getIdNumber().equals(casted.getIdNumber());
+    }
 }

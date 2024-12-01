@@ -17,7 +17,7 @@ public interface DataAccessor {
     public List<Repair> getRepairs();
     public List<Part> getParts();
 
-    public void addEmployee(Employee employee);
+    public boolean addEmployee(Employee employee);
     public void addClient(Client client);
     public void addCar(Car car);
     public void addRepair(Repair repair);

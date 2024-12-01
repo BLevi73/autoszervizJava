@@ -24,7 +24,7 @@ public class MainController {
         this.programConfig = programConfig;
         this.data = data;
     }
-    
+
     public MainFrame getMainFrame() {
         return mainFrame;
     }
@@ -48,6 +48,7 @@ public class MainController {
         mainFrame.getMainMenuBar().getSettingsMenu().getPreferencesItem()
                 .addActionListener(new PreferencesListener(this));
         mainFrame.getMainPanel().getMainToolBar().getAddButton().addActionListener(new AddButtonListener(this));
+        mainFrame.getMainPanel().getMainToolBar().getRemoveButton().addActionListener(new RemoveButtonListener(this));
         mainFrame.getMainPanel().getMainToolBar().getQueryButton().addActionListener(new QueryButtonListener(this));
     }
 
@@ -95,32 +96,79 @@ public class MainController {
     }
 
     public void openPreferences() {
-        PreferencesFrame preferencesFrame = new PreferencesFrame();
+        int returnVal = PreferencesDialog.showPreferencesDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            if (PreferencesDialog.getIntervalTextField().getText().isBlank()) {
+                programConfig.setAutosaveInterval(PreferencesDialog.getSelectedInterval());
+            } else {
+                int customInterval = Integer.parseInt(PreferencesDialog.getIntervalTextField().getText());
+                if (customInterval > 0) {
+                    programConfig.setAutosaveInterval(customInterval);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Custom interval must be larger than 0!", "Wrong input",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            programConfig.write();
+        }
     }
 
     public void addEmployee() {
         int returnVal = EmployeeDialog.showAddEmployeeDialog();
         if (returnVal == JOptionPane.YES_OPTION) {
-            synchronized (data) {
-                employeeData.addEmployeeData(new Employee(EmployeeDialog.getIdNumberInputField().getText(),
-                        EmployeeDialog.getNameInputField().getText(),
-                        EmployeeDialog.getPhoneNumberInputField().getText(),
-                        EmployeeDialog.getEmailInputField().getText(),
-                        EmployeeDialog.getPositionInputField().getText()));
+            Employee toAdd = new Employee(EmployeeDialog.getIdNumberInputField().getText(),
+                    EmployeeDialog.getNameInputField().getText(),
+                    EmployeeDialog.getPhoneNumberInputField().getText(),
+                    EmployeeDialog.getEmailInputField().getText(),
+                    EmployeeDialog.getPositionInputField().getText());
+            boolean operationSuccessful = true;
+            if (!data.addEmployee(toAdd)) {
+                operationSuccessful = false;
+            }
+            if (!operationSuccessful) {
+                JOptionPane.showMessageDialog(null, "This employee is already in the database!", "Operation failed",
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
+        employeeData.fireTableDataChanged();
+        mainFrame.getMainPanel().getMainInfoBar().getNumberOfEmployeesLabel()
+                .setText(Integer.toString(data.getEmployees().size()));
     }
 
     public void addClient() {
         int returnVal = ClientDialog.showAddClientDialog();
         if (returnVal == JOptionPane.YES_OPTION) {
+            Client toAdd = new Client(ClientDialog.getIdNumberInputField().getText(),
+                    ClientDialog.getNameInputField().getText(),
+                    ClientDialog.getPhoneNumberInputField().getText(),
+                    ClientDialog.getEmailInputField().getText());
+            boolean operationSuccessful = true;
             synchronized (data) {
-                clientData.addClientData(new Client(ClientDialog.getIdNumberInputField().getText(),
-                        ClientDialog.getNameInputField().getText(),
-                        ClientDialog.getPhoneNumberInputField().getText(),
-                        ClientDialog.getEmailInputField().getText()));
+                if (!clientData.addClient(toAdd)) {
+                    operationSuccessful = false;
+                }
+            }
+            if (!operationSuccessful) {
+                JOptionPane.showMessageDialog(null, "This client is already in the database!", "Operation failed",
+                        JOptionPane.WARNING_MESSAGE);
             }
         }
+    }
+
+    public void removeEmployee() {
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable().getSelectedRow();
+        String idNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable()
+                .getValueAt(selectedRow, 0);
+        String name = (String) mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable()
+                .getValueAt(selectedRow, 1);
+        String phoneNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable()
+                .getValueAt(selectedRow, 2);
+        String email = (String) mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable()
+                .getValueAt(selectedRow, 3);
+        String position = (String) mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable()
+                .getValueAt(selectedRow, 4);
+        Employee toRemove = new Employee(idNumber, name, phoneNumber, email, position);
+        employeeData.removeEmployee(toRemove);
     }
 
     public int getOpenedTab() {
@@ -142,9 +190,10 @@ public class MainController {
                     EmployeeQueryDialog.getPhoneNumberInputField().getText(),
                     EmployeeQueryDialog.getEmailInputField().getText(),
                     EmployeeQueryDialog.getPositionInputField().getText());
-            filteredData = new EmployeeData(employeeData.getFilteredData(filter));
+            filteredData = employeeData.getFilteredData(filter);
             QueryFrame queryFrame = new QueryFrame();
             queryFrame.getTable().setModel(filteredData);
+            queryFrame.getFoundRecords().setText("Found records: " + Integer.toString(filteredData.getRowCount()));
         }
     }
 

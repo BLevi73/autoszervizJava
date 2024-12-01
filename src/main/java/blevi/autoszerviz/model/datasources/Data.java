@@ -29,76 +29,82 @@ public class Data implements DataAccessor, Serializable {
         parts = new ArrayList<>();
     }
 
-    public static boolean isLocked() {
-        return isLocked;
+    private static void lock() {
+        isLocked = true;
     }
-    public static void setLocked(boolean isLocked) {
-        Data.isLocked = isLocked;
+    private static void unlock() {
+        isLocked = false;
     }
 
     @Override
-    public List<Employee> getEmployees() {
+    public synchronized List<Employee> getEmployees() {
         return employees;
     }
 
     @Override
-    public List<Client> getClients() {
+    public synchronized List<Client> getClients() {
         return clients;
     }
 
     @Override
-    public List<Car> getCars() {
+    public synchronized List<Car> getCars() {
         return cars;
     }
 
     @Override
-    public List<Repair> getRepairs() {
+    public synchronized List<Repair> getRepairs() {
         return repairs;
     }
 
     @Override
-    public List<Part> getParts() {
+    public synchronized List<Part> getParts() {
         return parts;
     }
 
-    public void setEmployees(List<Employee> employees) {
+    public synchronized void setEmployees(List<Employee> employees) {
         this.employees = new ArrayList<>(employees);
     }
-    public void setClients(List<Client> clients) {
+    public synchronized void setClients(List<Client> clients) {
         this.clients = new ArrayList<>(clients);
     }
-    public void setCars(List<Car> cars) {
+    public synchronized void setCars(List<Car> cars) {
         this.cars = new ArrayList<>(cars);
     }
-    public void setRepairs(List<Repair> repairs) {
+    public synchronized void setRepairs(List<Repair> repairs) {
         this.repairs = new ArrayList<>(repairs);
     }
-    public void setParts(List<Part> parts) {
+    public synchronized void setParts(List<Part> parts) {
         this.parts = new ArrayList<>(parts);
     }
 
     @Override
-    public void addEmployee(Employee employee) {
+    public synchronized boolean addEmployee(Employee employee) {
+        for (Employee element : employees) {
+            if(element.equals(employee)) {
+                return false;
+            }
+        }
         employees.add(employee);
+        return true;
     }
 
     @Override
-    public void addClient(Client client) {
+    public synchronized void addClient(Client client) {
         clients.add(client);
     }
 
     @Override
-    public void addCar(Car car) {
+    public synchronized void addCar(Car car) {
         cars.add(car);
     }
 
     @Override
-    public void addRepair(Repair repair) {
+    public synchronized void addRepair(Repair repair) {
         repairs.add(repair);
     }
 
     @Override
-    public void addPart(Part part) {
+    public synchronized void addPart(Part part) {
         parts.add(part);
     }
 
@@ -111,14 +117,14 @@ public class Data implements DataAccessor, Serializable {
                 Thread.currentThread().interrupt();
             }
         }
-        setLocked(true);
+        lock();
         switch (type) {
             case ZIP:
                 try {
                     ZipHandler.writeToZip(this, filepath);
                 } catch (IOException e) {
                     e.printStackTrace();
-                    setLocked(false);
+                    unlock();
                 }
                 break;
             case XML:
@@ -126,7 +132,7 @@ public class Data implements DataAccessor, Serializable {
             default:
                 break;
         }
-        setLocked(false);
+        unlock();
         notifyAll();
     }
 
@@ -139,7 +145,7 @@ public class Data implements DataAccessor, Serializable {
                 Thread.currentThread().interrupt();
             }
         }
-        setLocked(true);
+        lock();
         switch (type) {
             case ZIP:
                 try {
@@ -151,12 +157,13 @@ public class Data implements DataAccessor, Serializable {
                     this.setParts(tmp.getParts());
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
+                    unlock();
                 }
                 break;
             default:
                 break;
         }
-        setLocked(false);
+        unlock();
         notifyAll();
     }
 }

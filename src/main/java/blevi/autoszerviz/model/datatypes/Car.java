@@ -48,4 +48,16 @@ public class Car implements Serializable {
     public int getHorsepower() {
         return horsepower;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Car)) {
+            return false;
+        }
+        Car casted = (Car)obj;
+        return licencePlate.equals(casted.licencePlate);
+    }
 }

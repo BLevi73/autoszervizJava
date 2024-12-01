@@ -21,7 +21,7 @@ public class JSONExportListener implements ActionListener {
         fileChooser.setAcceptAllFileFilterUsed(false);
         int returnVal = fileChooser.showSaveDialog(parent.getMainFrame());
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-            parent.saveData(fileChooser.getSelectedFile().getAbsolutePath(), SerializationType.ZIP);
+            parent.saveData(fileChooser.getSelectedFile().getAbsolutePath(), SerializationType.JSON);
         }
     }
 }

@@ -8,12 +8,14 @@ public class Repair implements Serializable {
     private String repairId;
     private String description;
     private int cost;
+    private Car repairedCar;
     private ArrayList<Part> usedParts;
 
     public Repair(String repairId, String description, int cost) {
         this.repairId = repairId;
         this.description = description;
         this.cost = cost;
+        this.repairedCar = null;
         this.usedParts = new ArrayList<>();
     }
 
@@ -29,16 +31,24 @@ public class Repair implements Serializable {
         return cost;
     }
 
+    public Car getRepairedCar() {
+        return repairedCar;
+    }
+
     public List<Part> getUsedParts() {
         return usedParts;
     }
-
+    
     public void setCost(int cost) {
         this.cost = cost;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setRepairedCar(Car repairedCar) {
+        this.repairedCar = repairedCar;
     }
 
     public void setUsedParts(List<Part> usedParts) {
