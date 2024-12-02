@@ -44,6 +44,8 @@ public class MainController {
                 .addActionListener(new XMLExportListener(this));
         mainFrame.getMainMenuBar().getFileMenu().getExportToJSONMenuItem()
                 .addActionListener(new JSONExportListener(this));
+        mainFrame.getMainMenuBar().getFileMenu().getImportFromJSONMenuItem()
+                .addActionListener(new JSONImportListener(this));
         mainFrame.getMainMenuBar().getViewMenu().getToolBarLock().addActionListener(new LockToolbarListener(this));
         mainFrame.getMainMenuBar().getSettingsMenu().getPreferencesItem()
                 .addActionListener(new PreferencesListener(this));

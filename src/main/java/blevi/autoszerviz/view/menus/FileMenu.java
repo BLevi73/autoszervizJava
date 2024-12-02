@@ -66,4 +66,10 @@ public class FileMenu extends JMenu {
     public JMenuItem getExportToJSONMenuItem() {
         return exportToJSONMenuItem;
     }
+    public JMenuItem getImportFromXMLMenuItem() {
+        return importFromXMLMenuItem;
+    }
+    public JMenuItem getImportFromJSONMenuItem() {
+        return importFromJSONMenuItem;
+    }
 }

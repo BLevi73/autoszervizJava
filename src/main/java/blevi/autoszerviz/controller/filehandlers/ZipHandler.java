@@ -34,7 +34,7 @@ public class ZipHandler {
         }
     }
 
-    public static Data loadFromZip(String filepath) throws IOException, ClassNotFoundException {
+    public static Data readFromZip(String filepath) throws IOException, ClassNotFoundException {
         if(!filepath.endsWith(".zip")) {
             throw new IOException("The file is not a .zip file");
         }

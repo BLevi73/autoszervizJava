@@ -168,7 +168,7 @@ public class Data implements DataAccessor, Serializable {
         switch (type) {
             case ZIP:
                 try {
-                    Data tmp = ZipHandler.loadFromZip(filepath);
+                    Data tmp = ZipHandler.readFromZip(filepath);
                     this.setEmployees(tmp.getEmployees());
                     this.setClients(tmp.getClients());
                     this.setCars(tmp.getCars());
@@ -179,7 +179,15 @@ public class Data implements DataAccessor, Serializable {
                     unlock();
                 }
                 break;
+            case XML:
+                break;
             default:
+                Data tmp = JSONHandler.readFromJSON(filepath);
+                this.setEmployees(tmp.getEmployees());
+                this.setClients(tmp.getClients());
+                this.setCars(tmp.getCars());
+                this.setRepairs(tmp.getRepairs());
+                this.setParts(tmp.getParts());
                 break;
         }
         unlock();
