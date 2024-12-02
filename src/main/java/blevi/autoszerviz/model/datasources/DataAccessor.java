@@ -18,10 +18,10 @@ public interface DataAccessor {
     public List<Part> getParts();
 
     public boolean addEmployee(Employee employee);
-    public void addClient(Client client);
-    public void addCar(Car car);
-    public void addRepair(Repair repair);
-    public void addPart(Part part);
+    public boolean addClient(Client client);
+    public boolean addCar(Car car);
+    public boolean addRepair(Repair repair);
+    public boolean addPart(Part part);
 
     public void write(String filepath, SerializationType type);
     public void load(String filepath, SerializationType type);

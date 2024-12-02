@@ -96,23 +96,47 @@ public class Data implements DataAccessor, Serializable {
     }
 
     @Override
-    public synchronized void addClient(Client client) {
+    public synchronized boolean addClient(Client client) {
+        for (Client element : clients) {
+            if (element.equals(client)) {
+                return false;
+            }
+        }
         clients.add(client);
+        return true;
     }
 
     @Override
-    public synchronized void addCar(Car car) {
+    public synchronized boolean addCar(Car car) {
+        for (Car element : cars) {
+            if (element.equals(car)) {
+                return false;
+            }
+        }
         cars.add(car);
+        return true;
     }
 
     @Override
-    public synchronized void addRepair(Repair repair) {
+    public synchronized boolean addRepair(Repair repair) {
+        for (Repair element : repairs) {
+            if (element.equals(repair)) {
+                return false;
+            }
+        }
         repairs.add(repair);
+        return true;
     }
 
     @Override
-    public synchronized void addPart(Part part) {
+    public synchronized boolean addPart(Part part) {
+        for (Part element : parts) {
+            if (element.equals(part)) {
+                return false;
+            }
+        }
         parts.add(part);
+        return true;
     }
 
     @Override
@@ -135,20 +159,10 @@ public class Data implements DataAccessor, Serializable {
                 }
                 break;
             case XML:
-                try {
-                    XMLHandler.writeToXML(this, filepath);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    unlock();
-                }
+                XMLHandler.writeToXML(this, filepath);
                 break;
             default:
-                try {
-                    JSONHandler.writeToJSON(this, filepath);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    unlock();
-                }
+                JSONHandler.writeToJSON(this, filepath);
                 break;
         }
         unlock();
@@ -165,10 +179,11 @@ public class Data implements DataAccessor, Serializable {
             }
         }
         lock();
+        Data tmp;
         switch (type) {
             case ZIP:
                 try {
-                    Data tmp = ZipHandler.readFromZip(filepath);
+                    tmp = ZipHandler.readFromZip(filepath);
                     this.setEmployees(tmp.getEmployees());
                     this.setClients(tmp.getClients());
                     this.setCars(tmp.getCars());
@@ -180,9 +195,15 @@ public class Data implements DataAccessor, Serializable {
                 }
                 break;
             case XML:
+                tmp = XMLHandler.readFromXML(filepath);
+                this.setEmployees(tmp.getEmployees());
+                this.setClients(tmp.getClients());
+                this.setCars(tmp.getCars());
+                this.setRepairs(tmp.getRepairs());
+                this.setParts(tmp.getParts());
                 break;
             default:
-                Data tmp = JSONHandler.readFromJSON(filepath);
+                tmp = JSONHandler.readFromJSON(filepath);
                 this.setEmployees(tmp.getEmployees());
                 this.setClients(tmp.getClients());
                 this.setCars(tmp.getCars());

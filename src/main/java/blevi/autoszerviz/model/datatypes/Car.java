@@ -4,14 +4,16 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
     private String licencePlate;
-    private int modelYear;
+    private Integer modelYear;
     private String manufacturer;
     private String model;
     private String chassisType;
     private String drivetrainType;
-    private int horsepower;
+    private Integer horsepower;
 
-    public Car(String licencePlate, int modelYear, String manufacturer, String model, String chassisType, String drivetrainType, int horsepower) {
+    public Car() {}
+
+    public Car(String licencePlate, Integer modelYear, String manufacturer, String model, String chassisType, String drivetrainType, Integer horsepower) {
         this.licencePlate = licencePlate;
         this.modelYear = modelYear;
         this.manufacturer = manufacturer;
@@ -25,7 +27,7 @@ public class Car implements Serializable {
         return licencePlate;
     }
 
-    public int getModelYear() {
+    public Integer getModelYear() {
         return modelYear;
     }
 
@@ -45,7 +47,7 @@ public class Car implements Serializable {
         return drivetrainType;
     }
 
-    public int getHorsepower() {
+    public Integer getHorsepower() {
         return horsepower;
     }
 

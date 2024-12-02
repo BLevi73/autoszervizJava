@@ -7,6 +7,10 @@ public class Client extends Person {
 
     private ArrayList<Car> ownedCars;
 
+    public Client() {
+        super();
+    }
+
     public Client(String idNumber, String name, String number, String email) {
         super(idNumber, name, number, email);
         this.ownedCars = new ArrayList<>();

@@ -8,6 +8,8 @@ public class Person implements Serializable {
     private String phoneNumber;
     private String email;
 
+    public Person() {}
+
     public Person(String idNumber, String name, String phoneNumber, String email) {
         this.idNumber = idNumber;
         this.name = name;

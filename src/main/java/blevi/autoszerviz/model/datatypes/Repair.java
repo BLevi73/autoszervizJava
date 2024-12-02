@@ -11,6 +11,8 @@ public class Repair implements Serializable {
     private Car repairedCar;
     private ArrayList<Part> usedParts;
 
+    public Repair() {}
+
     public Repair(String repairId, String description, int cost) {
         this.repairId = repairId;
         this.description = description;
