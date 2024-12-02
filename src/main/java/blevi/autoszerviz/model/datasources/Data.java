@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import blevi.autoszerviz.controller.filehandlers.JSONHandler;
 import blevi.autoszerviz.controller.filehandlers.SerializationType;
+import blevi.autoszerviz.controller.filehandlers.XMLHandler;
 import blevi.autoszerviz.controller.filehandlers.ZipHandler;
 import blevi.autoszerviz.model.datatypes.Car;
 import blevi.autoszerviz.model.datatypes.Client;
@@ -32,6 +34,7 @@ public class Data implements DataAccessor, Serializable {
     private static void lock() {
         isLocked = true;
     }
+
     private static void unlock() {
         isLocked = false;
     }
@@ -64,15 +67,19 @@ public class Data implements DataAccessor, Serializable {
     public synchronized void setEmployees(List<Employee> employees) {
         this.employees = new ArrayList<>(employees);
     }
+
     public synchronized void setClients(List<Client> clients) {
         this.clients = new ArrayList<>(clients);
     }
+
     public synchronized void setCars(List<Car> cars) {
         this.cars = new ArrayList<>(cars);
     }
+
     public synchronized void setRepairs(List<Repair> repairs) {
         this.repairs = new ArrayList<>(repairs);
     }
+
     public synchronized void setParts(List<Part> parts) {
         this.parts = new ArrayList<>(parts);
     }
@@ -80,7 +87,7 @@ public class Data implements DataAccessor, Serializable {
     @Override
     public synchronized boolean addEmployee(Employee employee) {
         for (Employee element : employees) {
-            if(element.equals(employee)) {
+            if (element.equals(employee)) {
                 return false;
             }
         }
@@ -128,8 +135,20 @@ public class Data implements DataAccessor, Serializable {
                 }
                 break;
             case XML:
+                try {
+                    XMLHandler.writeToXML(this, filepath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    unlock();
+                }
                 break;
             default:
+                try {
+                    JSONHandler.writeToJSON(this, filepath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    unlock();
+                }
                 break;
         }
         unlock();
