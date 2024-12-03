@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import blevi.autoszerviz.model.datatypes.Client;
-import blevi.autoszerviz.view.dialogs.ClientQueryDialog;
+import blevi.autoszerviz.view.dialogs.ClientDialog;
 
 public class ClientData extends AbstractTableModel {
     private List<Client> clients;
@@ -40,6 +40,11 @@ public class ClientData extends AbstractTableModel {
     }
 
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return String.class;
+    }
+
+    @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
             case 0:
@@ -53,18 +58,7 @@ public class ClientData extends AbstractTableModel {
         }
     }
 
-    public boolean addClient(Client client) {
-        for (Client element : clients) {
-            if(element.equals(client)) {
-                return false;
-            }
-        }
-        clients.add(client);
-        fireTableDataChanged();
-        return true;
-    }
-
-    public List<Client> getFilteredData(Client filter) {
+    public ClientData getFilteredData(Client filter) {
         List<Client> filteredData = new ArrayList<>();
         boolean idNumberFilterFlag;
         boolean nameFilterFlag;
@@ -79,14 +73,14 @@ public class ClientData extends AbstractTableModel {
                 filteredData.add(clientElement);
             }
         }
-        return filteredData;
+        return new ClientData(filteredData);
     }
 
     private boolean evaluateIdNumberFilter(Client element, Client filter) {
         if (filter.getIdNumber().isBlank()) {
             return true;
         } else {
-            switch (ClientQueryDialog.getIdNumberOrdering()) {
+            switch (ClientDialog.getIdNumberOrdering()) {
                 case 1:
                     return element.getIdNumber().compareTo(filter.getIdNumber()) < 0;
                 case 2:
@@ -100,7 +94,7 @@ public class ClientData extends AbstractTableModel {
         if (filter.getName().isBlank()) {
             return true;
         } else {
-            switch (ClientQueryDialog.getNameOrdering()) {
+            switch (ClientDialog.getNameOrdering()) {
                 case 1:
                     return element.getName().compareTo(filter.getName()) < 0;
                 case 2:
@@ -114,7 +108,7 @@ public class ClientData extends AbstractTableModel {
         if (filter.getPhoneNumber().isBlank()) {
             return true;
         } else {
-            switch (ClientQueryDialog.getPhoneNumberOrdering()) {
+            switch (ClientDialog.getPhoneNumberOrdering()) {
                 case 1:
                     return element.getPhoneNumber().compareTo(filter.getPhoneNumber()) < 0;
                 case 2:
@@ -128,7 +122,7 @@ public class ClientData extends AbstractTableModel {
         if (filter.getEmail().isBlank()) {
             return true;
         } else {
-            switch (ClientQueryDialog.getEmailOrdering()) {
+            switch (ClientDialog.getEmailOrdering()) {
                 case 1:
                     return element.getEmail().compareTo(filter.getEmail()) < 0;
                 case 2:

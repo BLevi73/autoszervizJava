@@ -12,11 +12,11 @@ public class MainToolBar extends JToolBar {
     JButton queryButton;
 
     public MainToolBar() {
-        addButton = new JButton(new ImageIcon("src/main/resources/icons/plus-48.png"));
-        removeButton = new JButton(new ImageIcon("src/main/resources/icons/minus-48.png"));
-        editButton = new JButton(new ImageIcon("src/main/resources/icons/pencil-2-48.png"));
-        dataViewButton = new JButton(new ImageIcon("src/main/resources/icons/copywriting-48.png"));
-        queryButton = new JButton(new ImageIcon("src/main/resources/icons/search-13-48.png"));
+        addButton = new JButton("Add", new ImageIcon("src/main/resources/icons/plus-48.png"));
+        removeButton = new JButton("Remove", new ImageIcon("src/main/resources/icons/minus-48.png"));
+        editButton = new JButton("Edit", new ImageIcon("src/main/resources/icons/pencil-2-48.png"));
+        dataViewButton = new JButton("View details", new ImageIcon("src/main/resources/icons/copywriting-48.png"));
+        queryButton = new JButton("Search", new ImageIcon("src/main/resources/icons/search-13-48.png"));
         this.add(addButton);
         this.add(removeButton);
         this.add(editButton);

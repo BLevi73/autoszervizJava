@@ -5,17 +5,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import blevi.autoszerviz.controller.filehandlers.JSONHandler;
-import blevi.autoszerviz.controller.filehandlers.SerializationType;
-import blevi.autoszerviz.controller.filehandlers.XMLHandler;
-import blevi.autoszerviz.controller.filehandlers.ZipHandler;
-import blevi.autoszerviz.model.datatypes.Car;
-import blevi.autoszerviz.model.datatypes.Client;
-import blevi.autoszerviz.model.datatypes.Employee;
-import blevi.autoszerviz.model.datatypes.Part;
-import blevi.autoszerviz.model.datatypes.Repair;
+import blevi.autoszerviz.controller.filehandlers.*;
+import blevi.autoszerviz.model.datatypes.*;
 
 public class Data implements DataAccessor, Serializable {
+    // Fields
     private static boolean isLocked = false;
     private ArrayList<Employee> employees;
     private ArrayList<Client> clients;
@@ -23,6 +17,7 @@ public class Data implements DataAccessor, Serializable {
     private ArrayList<Repair> repairs;
     private ArrayList<Part> parts;
 
+    // Constructor
     public Data() {
         employees = new ArrayList<>();
         clients = new ArrayList<>();
@@ -31,6 +26,7 @@ public class Data implements DataAccessor, Serializable {
         parts = new ArrayList<>();
     }
 
+    // Synchronization lock methods
     private static void lock() {
         isLocked = true;
     }
@@ -39,6 +35,7 @@ public class Data implements DataAccessor, Serializable {
         isLocked = false;
     }
 
+    // Getters
     @Override
     public synchronized List<Employee> getEmployees() {
         return employees;
@@ -64,6 +61,7 @@ public class Data implements DataAccessor, Serializable {
         return parts;
     }
 
+    // Setters
     public synchronized void setEmployees(List<Employee> employees) {
         this.employees = new ArrayList<>(employees);
     }
@@ -84,6 +82,7 @@ public class Data implements DataAccessor, Serializable {
         this.parts = new ArrayList<>(parts);
     }
 
+    // Adders
     @Override
     public synchronized boolean addEmployee(Employee employee) {
         for (Employee element : employees) {
@@ -139,6 +138,33 @@ public class Data implements DataAccessor, Serializable {
         return true;
     }
 
+    // Removers
+    @Override
+    public void removeEmployee(Employee employee) {
+        employees.remove(employee);
+    }
+
+    @Override
+    public void removeClient(Client client) {
+        clients.remove(client);
+    }
+
+    @Override
+    public void removeCar(Car car) {
+        cars.remove(car);
+    }
+
+    @Override
+    public void removeRepair(Repair repair) {
+        repairs.remove(repair);
+    }
+
+    @Override
+    public void removePart(Part part) {
+        parts.remove(part);
+    }
+
+    // Serialization methods
     @Override
     public synchronized void write(String filepath, SerializationType type) {
         while (isLocked) {

@@ -8,10 +8,19 @@ import java.io.ObjectOutputStream;
 
 import blevi.autoszerviz.controller.logic.ProgramConfig;
 
+/**
+ * Utility class, handles the serialization of the configuration file.
+ */
 public class ConfigHandler {
     private ConfigHandler() {
         throw new IllegalStateException();
     }
+
+    /**
+     * Writes the configuration in the user's home directory.
+     * @param programConfig The configuration to be written
+     * @throws IOException
+     */
     public static void writeConfig(ProgramConfig programConfig) throws IOException {
         try {
             FileOutputStream fileOutput = new FileOutputStream(System.getProperty("user.dir") + "/carmechanic.config");
@@ -22,6 +31,13 @@ public class ConfigHandler {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Reads the configuration from the user's home directory.
+     * @return The new configuration for the program
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static ProgramConfig readConfig() throws IOException, ClassNotFoundException {
         try {
             FileInputStream fileInput = new FileInputStream(System.getProperty("user.dir") + "/carmechanic.config");

@@ -8,18 +8,17 @@ public class Car implements Serializable {
     private String manufacturer;
     private String model;
     private String chassisType;
-    private String drivetrainType;
     private Integer horsepower;
 
-    public Car() {}
+    public Car() {
+    }
 
-    public Car(String licencePlate, Integer modelYear, String manufacturer, String model, String chassisType, String drivetrainType, Integer horsepower) {
+    public Car(String licencePlate, Integer modelYear, String manufacturer, String model, String chassisType, Integer horsepower) {
         this.licencePlate = licencePlate;
         this.modelYear = modelYear;
         this.manufacturer = manufacturer;
         this.model = model;
         this.chassisType = chassisType;
-        this.drivetrainType = drivetrainType;
         this.horsepower = horsepower;
     }
 
@@ -43,12 +42,32 @@ public class Car implements Serializable {
         return chassisType;
     }
 
-    public String getDrivetrainType() {
-        return drivetrainType;
-    }
-
     public Integer getHorsepower() {
         return horsepower;
+    }
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
+    }
+
+    public void setModelYear(Integer modelYear) {
+        this.modelYear = modelYear;
+    }
+
+    public void setManufacturer(String manufacturer) {
+        this.manufacturer = manufacturer;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setChassisType(String chassisType) {
+        this.chassisType = chassisType;
+    }
+
+    public void setHorsepower(Integer horsepower) {
+        this.horsepower = horsepower;
     }
 
     @Override
@@ -59,7 +78,7 @@ public class Car implements Serializable {
         if (!(obj instanceof Car)) {
             return false;
         }
-        Car casted = (Car)obj;
+        Car casted = (Car) obj;
         return licencePlate.equals(casted.licencePlate);
     }
 }

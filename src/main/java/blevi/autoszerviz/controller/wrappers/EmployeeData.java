@@ -6,7 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import blevi.autoszerviz.model.datatypes.Employee;
-import blevi.autoszerviz.view.dialogs.EmployeeQueryDialog;
+import blevi.autoszerviz.view.dialogs.EmployeeDialog;
 
 public class EmployeeData extends AbstractTableModel {
     private List<Employee> employees;
@@ -62,11 +62,6 @@ public class EmployeeData extends AbstractTableModel {
         }
     }
 
-    public void removeEmployee(Employee employee) {
-        employees.remove(employee);
-        fireTableDataChanged();
-    }
-
     public EmployeeData getFilteredData(Employee filter) {
         List<Employee> filteredData = new ArrayList<>();
         boolean idNumberFilterFlag;
@@ -92,7 +87,7 @@ public class EmployeeData extends AbstractTableModel {
         if (filter.getIdNumber().isBlank()) {
             return true;
         } else {
-            switch (EmployeeQueryDialog.getIdNumberOrdering()) {
+            switch (EmployeeDialog.getIdNumberOrdering()) {
                 case 1:
                     return element.getIdNumber().compareTo(filter.getIdNumber()) < 0;
                 case 2:
@@ -107,7 +102,7 @@ public class EmployeeData extends AbstractTableModel {
         if (filter.getName().isBlank()) {
             return true;
         } else {
-            switch (EmployeeQueryDialog.getNameOrdering()) {
+            switch (EmployeeDialog.getNameOrdering()) {
                 case 1:
                     return element.getName().compareTo(filter.getName()) < 0;
                 case 2:
@@ -122,7 +117,7 @@ public class EmployeeData extends AbstractTableModel {
         if (filter.getPhoneNumber().isBlank()) {
             return true;
         } else {
-            switch (EmployeeQueryDialog.getPhoneNumberOrdering()) {
+            switch (EmployeeDialog.getPhoneNumberOrdering()) {
                 case 1:
                     return element.getPhoneNumber().compareTo(filter.getPhoneNumber()) < 0;
                 case 2:
@@ -137,7 +132,7 @@ public class EmployeeData extends AbstractTableModel {
         if (filter.getEmail().isBlank()) {
             return true;
         } else {
-            switch (EmployeeQueryDialog.getEmailOrdering()) {
+            switch (EmployeeDialog.getEmailOrdering()) {
                 case 1:
                     return element.getEmail().compareTo(filter.getEmail()) < 0;
                 case 2:
@@ -152,7 +147,7 @@ public class EmployeeData extends AbstractTableModel {
         if (filter.getPosition().isBlank()) {
             return true;
         } else {
-            switch (EmployeeQueryDialog.getPositionOrdering()) {
+            switch (EmployeeDialog.getPositionOrdering()) {
                 case 1:
                     return element.getPosition().compareTo(filter.getPosition()) < 0;
                 case 2:

@@ -23,6 +23,12 @@ public interface DataAccessor {
     public boolean addRepair(Repair repair);
     public boolean addPart(Part part);
 
+    public void removeEmployee(Employee employee);
+    public void removeClient(Client client);
+    public void removeCar(Car car);
+    public void removeRepair(Repair repair);
+    public void removePart(Part part);
+
     public void write(String filepath, SerializationType type);
     public void load(String filepath, SerializationType type);
 }

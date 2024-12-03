@@ -10,7 +10,18 @@ import com.google.gson.GsonBuilder;
 
 import blevi.autoszerviz.model.datasources.Data;
 
+/**
+ * Utility class, handles the serialization of the data in JSON format.
+ */
 public class JSONHandler {
+    private JSONHandler() {
+        throw new IllegalStateException();
+    }
+    /**
+     * Writes the data in a JSON format file at the given path.
+     * @param data The data to be written
+     * @param filepath The absolute path of the file to be written
+     */
     public static void writeToJSON(Data data, String filepath) {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
@@ -25,6 +36,11 @@ public class JSONHandler {
             e.printStackTrace(); 
         }
     }
+    /**
+     * Reads the data from a JSON format file from the given path.
+     * @param filepath The absolute path of the file to be read
+     * @return The data read from the file
+     */
     public static Data readFromJSON(String filepath) {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();

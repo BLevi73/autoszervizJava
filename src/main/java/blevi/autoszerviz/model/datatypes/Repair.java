@@ -7,16 +7,18 @@ import java.util.List;
 public class Repair implements Serializable {
     private String repairId;
     private String description;
-    private int cost;
+    private Integer cost;
+    private String dateOfRepair;
     private Car repairedCar;
     private ArrayList<Part> usedParts;
 
     public Repair() {}
 
-    public Repair(String repairId, String description, int cost) {
+    public Repair(String repairId, String description, Integer cost, String dateOfRepair) {
         this.repairId = repairId;
         this.description = description;
         this.cost = cost;
+        this.dateOfRepair = dateOfRepair;
         this.repairedCar = null;
         this.usedParts = new ArrayList<>();
     }
@@ -29,8 +31,12 @@ public class Repair implements Serializable {
         return description;
     }
 
-    public int getCost() {
+    public Integer getCost() {
         return cost;
+    }
+    
+    public String getDateOfRepair() {
+        return dateOfRepair;
     }
 
     public Car getRepairedCar() {
@@ -49,11 +55,27 @@ public class Repair implements Serializable {
         this.description = description;
     }
 
+    public void setDateOfRepair(String dateOfRepair) {
+        this.dateOfRepair = dateOfRepair;
+    }
+
     public void setRepairedCar(Car repairedCar) {
         this.repairedCar = repairedCar;
     }
 
     public void setUsedParts(List<Part> usedParts) {
         this.usedParts = new ArrayList<>(usedParts);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Repair)) {
+            return false;
+        }
+        Repair casted = (Repair)obj;
+        return repairId.equals(casted.repairId);
     }
 }

@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 
 import blevi.autoszerviz.controller.logic.MainController;
 
-public class AddButtonListener implements ActionListener {
+public class EditButtonListener implements ActionListener {
     MainController parent;
 
-    public AddButtonListener(MainController parent) {
+    public EditButtonListener(MainController parent) {
         this.parent = parent;
     }
 
@@ -16,19 +16,19 @@ public class AddButtonListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (parent.getOpenedTab()) {
             case 0:
-                parent.addEmployee();
+                parent.modifyEmployee();
                 break;
             case 1:
-                parent.addClient();
+                parent.modifyClient();
                 break;
             case 2:
-                parent.addCar();
+                parent.modifyCar();
                 break;
             case 3:
-                parent.addRepair();
+                parent.modifyRepair();
                 break;
             default:
-                parent.addPart();
+                parent.modifyPart();
                 break;
         }
 

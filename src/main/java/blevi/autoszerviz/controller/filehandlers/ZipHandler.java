@@ -11,11 +11,20 @@ import java.util.zip.ZipOutputStream;
 
 import blevi.autoszerviz.model.datasources.Data;
 
+/**
+ * Utility class, handles the serialization of the data in Zip format.
+ */
 public class ZipHandler {
     private ZipHandler() {
-        throw new IllegalStateException("Utility class, cannot be instantiated");
+        throw new IllegalStateException();
     }
 
+    /**
+     * Writes the data in a Zip format file at the given path.
+     * @param data The data to be written
+     * @param filepath The absolute path of the file to be written
+     * @throws IOException
+     */
     public static void writeToZip(Data source, String filepath) throws IOException {
         if(!filepath.endsWith(".zip")) {
             filepath = filepath.concat(".zip");
@@ -33,7 +42,13 @@ public class ZipHandler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Reads the data from a Zip format file from the given path.
+     * @param filepath The absolute path of the file to be read
+     * @return The data read from the file
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static Data readFromZip(String filepath) throws IOException, ClassNotFoundException {
         if(!filepath.endsWith(".zip")) {
             throw new IOException("The file is not a .zip file");
@@ -56,6 +71,11 @@ public class ZipHandler {
         return new Data();
     }
 
+    /**
+     * Converts an object to a byte array.
+     * @param obj The object to be converted
+     * @return the object as byte array
+     */
     private static byte[] convertToByteArray(Object obj) {
         ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
         try {
