@@ -1,0 +1,15 @@
+{
+  "employees": [
+    {
+      "position": "Leader",
+      "idNumber": "001",
+      "name": "John Doe",
+      "phoneNumber": "555-123456",
+      "email": "john@example.com"
+    }
+  ],
+  "clients": [],
+  "cars": [],
+  "repairs": [],
+  "parts": []
+}

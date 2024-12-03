@@ -568,6 +568,9 @@ public class MainController {
         detailsFrame.getTextArea().setText(toPrint.toString());
     }
 
+    /**
+     * Shows a detailed view of the selected car.
+     */
     public void viewCarDetails() {
         int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable().getSelectedRow();
         String licencePlate = (String) mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable()
@@ -578,6 +581,9 @@ public class MainController {
         detailsFrame.getTextArea().setText(toPrint.toString());
     }
 
+    /**
+     * Shows a detailed view of the selected repair.
+     */
     public void viewRepairDetails() {
         int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
         String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
@@ -588,6 +594,9 @@ public class MainController {
         detailsFrame.getTextArea().setText(toPrint.toString());
     }
 
+    /**
+     * Shows a detailed view of the selected part.
+     */
     public void viewPartDetails() {
         int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable().getSelectedRow();
         String serialNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable()
@@ -712,6 +721,9 @@ public class MainController {
     }
 
     //Connectors
+    /**
+     * Adds the selected car to the selected client.
+     */
     public void addCarToClient() {
         int selectedRowInClients = mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable().getSelectedRow();
         String idNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable()
@@ -726,6 +738,9 @@ public class MainController {
         client.addCar(toAddToClient);
     }
 
+    /**
+     * Sets the selected car for the selected repair.
+     */
     public void setRepairedCar() {
         int selectedRowInRepairs = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
         String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
@@ -740,6 +755,9 @@ public class MainController {
         repair.setRepairedCar(toSetForRepair);
     }
 
+    /**
+     * Adds the selected part for the selected repair.
+     */
     public void addPartToRepair() {
         int selectedRowInRepairs = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
         String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
