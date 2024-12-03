@@ -1,5 +1,6 @@
 package blevi.autoszerviz.controller.wrappers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -54,5 +55,14 @@ public class RepairData extends AbstractTableModel {
             default:
                 return repairs.get(rowIndex).getDateOfRepair();
         }
+    }
+
+    public RepairData getFilteredData(Repair filter) {
+        List<Repair> filteredData = new ArrayList<>();
+        boolean repairIdFlag;
+        boolean descriptionFlag;
+        boolean costFlag;
+        boolean dateFlag;
+        return new RepairData(filteredData);
     }
 }

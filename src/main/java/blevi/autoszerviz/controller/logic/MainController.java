@@ -144,6 +144,23 @@ public class MainController {
                 .setText(Integer.toString(data.getParts().size()));
     }
 
+    /**
+     * Gets the index of the currently visbile tab in the MainFrame.
+     * 
+     * @return the index of the visible tab
+     */
+    public int getOpenedTab() {
+        return mainFrame.getMainPanel().getTablesTabbedPane().getSelectedIndex();
+    }
+
+    /**
+     * Locks the toolbar's position.
+     */
+    public void lockToolbar() {
+        mainFrame.getMainPanel().getMainToolBar()
+                .setFloatable(!mainFrame.getMainPanel().getMainToolBar().isFloatable());
+    }
+
     // Serialization methods
 
     /**
@@ -256,6 +273,23 @@ public class MainController {
      * Adds a new car to the data.
      */
     public void addCar() {
+        int returnVal = CarDialog.showAddCarDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            Car toAdd = new Car(CarDialog.getLicencePlateInputField().getText(),
+                    Integer.valueOf(CarDialog.getModelYearInputField().getText()),
+                    CarDialog.getManufacturerInputField().getText(),
+                    CarDialog.getModelInputField().getText(),
+                    CarDialog.getChassisTypeInputField().getText(),
+                    Integer.valueOf(CarDialog.getHorsepowerInputField().getText()));
+            boolean operationSuccessful = true;
+            if (!data.addCar(toAdd)) {
+                operationSuccessful = false;
+            }
+            if (!operationSuccessful) {
+                JOptionPane.showMessageDialog(null, "This car is already in the database!", "Operation failed",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
         carData.fireTableDataChanged();
         updateInfo();
     }
@@ -264,6 +298,21 @@ public class MainController {
      * Adds a new repair to the data.
      */
     public void addRepair() {
+        int returnVal = RepairDialog.showAddRepairDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            Repair toAdd = new Repair(RepairDialog.getRepairIdInputField().getText(),
+                    RepairDialog.getDescriptionInputField().getText(),
+                    Integer.valueOf(RepairDialog.getCostInputField().getText()),
+                    RepairDialog.getDateInputField().getText());
+            boolean operationSuccessful = true;
+            if (!data.addRepair(toAdd)) {
+                operationSuccessful = false;
+            }
+            if (!operationSuccessful) {
+                JOptionPane.showMessageDialog(null, "This repair is already in the database!", "Operation failed",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
         repairData.fireTableDataChanged();
         updateInfo();
     }
@@ -394,7 +443,29 @@ public class MainController {
      * Modifies a car.
      */
     public void modifyCar() {
-
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable().getSelectedRow();
+        String idNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable()
+                .getValueAt(selectedRow, 0);
+        Car finder = new Car(idNumber, null, null, null, null, null);
+        Car toEdit = data.getCars().get(data.getCars().indexOf(finder));
+        int returnVal = CarDialog.showModifyCarDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            if (!CarDialog.getModelYearInputField().getText().isBlank()) {
+                toEdit.setModelYear(Integer.valueOf(CarDialog.getModelYearInputField().getText()));
+            }
+            if (!CarDialog.getManufacturerInputField().getText().isBlank()) {
+                toEdit.setManufacturer(CarDialog.getManufacturerInputField().getText());
+            }
+            if (!CarDialog.getModelInputField().getText().isBlank()) {
+                toEdit.setModel(CarDialog.getModelInputField().getText());
+            }
+            if (!CarDialog.getChassisTypeInputField().getText().isBlank()) {
+                toEdit.setChassisType(CarDialog.getChassisTypeInputField().getText());
+            }
+            if (!CarDialog.getHorsepowerInputField().getText().isBlank()) {
+                toEdit.setHorsepower(Integer.valueOf(CarDialog.getHorsepowerInputField().getText()));
+            }
+        }
         carData.fireTableDataChanged();
     }
 
@@ -402,7 +473,23 @@ public class MainController {
      * Modifies a repair.
      */
     public void modifyRepair() {
-
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
+        String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
+                .getValueAt(selectedRow, 0);
+        Repair finder = new Repair(repairId, null, null, null);
+        Repair toEdit = data.getRepairs().get(data.getRepairs().indexOf(finder));
+        int returnVal = RepairDialog.showModifyRepairDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            if (!RepairDialog.getDescriptionInputField().getText().isBlank()) {
+                toEdit.setDescription(RepairDialog.getDescriptionInputField().getText());
+            }
+            if (!RepairDialog.getCostInputField().getText().isBlank()) {
+                toEdit.setCost(Integer.valueOf(RepairDialog.getCostInputField().getText()));
+            }
+            if (!RepairDialog.getDateInputField().getText().isBlank()) {
+                toEdit.setDateOfRepair(RepairDialog.getDateInputField().getText());
+            }
+        }
         repairData.fireTableDataChanged();
     }
 
@@ -414,23 +501,6 @@ public class MainController {
         partData.fireTableDataChanged();
     }
 
-    /**
-     * Gets the index of the currently visbile tab in the MainFrame.
-     * 
-     * @return the index of the visible tab
-     */
-    public int getOpenedTab() {
-        return mainFrame.getMainPanel().getTablesTabbedPane().getSelectedIndex();
-    }
-
-    /**
-     * Locks the toolbar's position.
-     */
-    public void lockToolbar() {
-        mainFrame.getMainPanel().getMainToolBar()
-                .setFloatable(!mainFrame.getMainPanel().getMainToolBar().isFloatable());
-    }
-
     // Query creators
     /**
      * Creates a query for the employees.
@@ -440,11 +510,12 @@ public class MainController {
         Employee filter;
         EmployeeData filteredData;
         if (returnVal == JOptionPane.YES_OPTION) {
-            filter = new Employee(EmployeeDialog.getIdNumberInputField().getText(),
-                    EmployeeDialog.getNameInputField().getText(),
-                    EmployeeDialog.getPhoneNumberInputField().getText(),
-                    EmployeeDialog.getEmailInputField().getText(),
-                    EmployeeDialog.getPositionInputField().getText());
+            String idNumber = EmployeeDialog.getIdNumberInputField().getText();
+            String name = EmployeeDialog.getNameInputField().getText();
+            String phoneNumber = EmployeeDialog.getPhoneNumberInputField().getText();
+            String email = EmployeeDialog.getEmailInputField().getText();
+            String position = EmployeeDialog.getPositionInputField().getText();
+            filter = new Employee(idNumber, name, phoneNumber, email, position);
             filteredData = employeeData.getFilteredData(filter);
             QueryFrame queryFrame = new QueryFrame();
             queryFrame.getTable().setModel(filteredData);
@@ -460,14 +531,72 @@ public class MainController {
         Client filter;
         ClientData filteredData;
         if (returnVal == JOptionPane.YES_OPTION) {
-            filter = new Client(ClientDialog.getIdNumberInputField().getText(),
-                    ClientDialog.getNameInputField().getText(),
-                    ClientDialog.getPhoneNumberInputField().getText(),
-                    ClientDialog.getEmailInputField().getText());
+            String idNumber = ClientDialog.getIdNumberInputField().getText();
+            String name = ClientDialog.getNameInputField().getText();
+            String phoneNumber = ClientDialog.getPhoneNumberInputField().getText();
+            String email = ClientDialog.getEmailInputField().getText();
+            filter = new Client(idNumber, name, phoneNumber, email);
             filteredData = clientData.getFilteredData(filter);
             QueryFrame queryFrame = new QueryFrame();
             queryFrame.getTable().setModel(filteredData);
             queryFrame.getFoundRecords().setText("Found records: " + Integer.toString(filteredData.getRowCount()));
         }
+    }
+
+    /**
+     * Creates a query for the cars.
+     */
+    public void createCarQuery() {
+        int returnVal = CarDialog.showQueryCarDialog();
+        Car filter;
+        CarData filteredData;
+        if (returnVal == JOptionPane.YES_OPTION) {
+            String licencePlate = CarDialog.getLicencePlateInputField().getText();
+            Integer modelYear = null;
+            if (!CarDialog.getModelYearInputField().getText().isBlank()) {
+                modelYear = Integer.valueOf(CarDialog.getModelYearInputField().getText());
+            }
+            String manufacturer = CarDialog.getManufacturerInputField().getText();
+            String model = CarDialog.getModelInputField().getText();
+            String chassisType = CarDialog.getChassisTypeInputField().getText();
+            Integer horsepower = null;
+            if (!CarDialog.getHorsepowerInputField().getText().isBlank()) {
+                horsepower = Integer.valueOf(CarDialog.getHorsepowerInputField().getText());
+            }
+            filter = new Car(licencePlate, modelYear, manufacturer, model, chassisType, horsepower);
+            filteredData = carData.getFilteredData(filter);
+            QueryFrame queryFrame = new QueryFrame();
+            queryFrame.getTable().setModel(filteredData);
+            queryFrame.getFoundRecords().setText("Found records: " + Integer.toString(filteredData.getRowCount()));
+        }
+    }
+
+    /**
+     * Creates a query for repairs.
+     */
+    public void createRepairQuery() {
+        int returnVal = RepairDialog.showQueryRepairDialog();
+        Repair filter;
+        RepairData filteredData;
+        if (returnVal == JOptionPane.YES_OPTION) {
+            String repairId = RepairDialog.getRepairIdInputField().getText();
+            String description = RepairDialog.getDescriptionInputField().getText();
+            Integer cost = null;
+            if (!RepairDialog.getCostInputField().getText().isBlank()) {
+                cost = Integer.valueOf(RepairDialog.getCostInputField().getText());
+            }
+            String date = RepairDialog.getDateInputField().getText();
+            filter = new Repair(repairId, description, cost, date);
+            filteredData = repairData.getFilteredData(filter);
+            QueryFrame queryFrame = new QueryFrame();
+            queryFrame.getTable().setModel(filteredData);
+        }
+    }
+
+    /**
+     * Creates a query for parts.
+     */
+    public void createPartQuery() {
+
     }
 }

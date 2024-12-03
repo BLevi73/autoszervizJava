@@ -21,7 +21,14 @@ public class QueryButtonListener implements ActionListener {
             case 1:
                 parent.createClientQuery();
                 break;
+            case 2:
+                parent.createCarQuery();
+                break;
+            case 3:
+                parent.createRepairQuery();
+                break;
             default:
+                parent.createPartQuery();
                 break;
         }
     }
