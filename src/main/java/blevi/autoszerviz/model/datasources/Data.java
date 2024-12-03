@@ -8,6 +8,9 @@ import java.util.List;
 import blevi.autoszerviz.controller.filehandlers.*;
 import blevi.autoszerviz.model.datatypes.*;
 
+/**
+ * Data class, contains the lists of employees, clients, cars, repairs and parts.
+ */
 public class Data implements DataAccessor, Serializable {
     // Fields
     private static boolean isLocked = false;
@@ -27,10 +30,16 @@ public class Data implements DataAccessor, Serializable {
     }
 
     // Synchronization lock methods
+    /**
+     * Locks writing and reading on the data.
+     */
     private static void lock() {
         isLocked = true;
     }
 
+    /**
+     * Unlocks the lock if it was set.
+     */
     private static void unlock() {
         isLocked = false;
     }
@@ -83,6 +92,9 @@ public class Data implements DataAccessor, Serializable {
     }
 
     // Adders
+    /**
+     * Adds a new employee.
+     */
     @Override
     public synchronized boolean addEmployee(Employee employee) {
         for (Employee element : employees) {
@@ -94,6 +106,9 @@ public class Data implements DataAccessor, Serializable {
         return true;
     }
 
+    /**
+     * Adds a new client.
+     */
     @Override
     public synchronized boolean addClient(Client client) {
         for (Client element : clients) {
@@ -105,6 +120,9 @@ public class Data implements DataAccessor, Serializable {
         return true;
     }
 
+    /**
+     * Adds a new car.
+     */
     @Override
     public synchronized boolean addCar(Car car) {
         for (Car element : cars) {
@@ -116,6 +134,9 @@ public class Data implements DataAccessor, Serializable {
         return true;
     }
 
+    /**
+     * Adds a new repair.
+     */
     @Override
     public synchronized boolean addRepair(Repair repair) {
         for (Repair element : repairs) {
@@ -127,6 +148,9 @@ public class Data implements DataAccessor, Serializable {
         return true;
     }
 
+    /**
+     * Adds a new part.
+     */
     @Override
     public synchronized boolean addPart(Part part) {
         for (Part element : parts) {
@@ -139,32 +163,50 @@ public class Data implements DataAccessor, Serializable {
     }
 
     // Removers
+    /**
+     * Removes an employee from the data.
+     */
     @Override
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
     }
 
+    /**
+     * Removes a client from the data.
+     */
     @Override
     public void removeClient(Client client) {
         clients.remove(client);
     }
 
+    /**
+     * Removes a car from the data.
+     */
     @Override
     public void removeCar(Car car) {
         cars.remove(car);
     }
 
+    /**
+     * Removes a repair from the data.
+     */
     @Override
     public void removeRepair(Repair repair) {
         repairs.remove(repair);
     }
 
+    /**
+     * Removes a part from the data.
+     */
     @Override
     public void removePart(Part part) {
         parts.remove(part);
     }
 
     // Serialization methods
+    /**
+     * Calls the required data writing function depending on the serialization type.
+     */
     @Override
     public synchronized void write(String filepath, SerializationType type) {
         while (isLocked) {
@@ -195,6 +237,9 @@ public class Data implements DataAccessor, Serializable {
         notifyAll();
     }
 
+    /**
+     * Calls the required data loading function depending on the serialization type.
+     */
     @Override
     public synchronized void load(String filepath, SerializationType type) {
         while (isLocked) {

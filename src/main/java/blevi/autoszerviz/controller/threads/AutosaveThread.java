@@ -6,6 +6,10 @@ import blevi.autoszerviz.controller.filehandlers.SerializationType;
 import blevi.autoszerviz.controller.logic.ProgramConfig;
 import blevi.autoszerviz.model.datasources.Data;
 
+/**
+ * Autosave thread, creates an autosave of the currently opened data.
+ * The time between autosaves is loaded from the programConfig object.
+ */
 public class AutosaveThread extends Thread {
     private Data data;
     private ProgramConfig programConfig;

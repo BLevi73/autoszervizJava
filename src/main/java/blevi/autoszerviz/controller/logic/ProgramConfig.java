@@ -7,6 +7,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * ProgramConfig class, contains the autosave interval expressed in milliseconds.
+ */
 public class ProgramConfig implements Serializable {
     private long autosaveInterval;
     public ProgramConfig() {
@@ -18,6 +21,9 @@ public class ProgramConfig implements Serializable {
     public void setAutosaveInterval(int autosaveInterval) {
         this.autosaveInterval = autosaveInterval;
     }
+    /**
+     * Writes the object into a config file, located in the user home directory.
+     */
     public void write() {
         try {
             FileOutputStream fileOutput = new FileOutputStream(System.getProperty("user.home") + "/carmechanic.config");
@@ -28,6 +34,13 @@ public class ProgramConfig implements Serializable {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Loads the object from a config file, located in the user home directory.
+     * @return the ProgramConfig object
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ProgramConfig load() throws IOException, ClassNotFoundException {
         try {
             FileInputStream fileInput = new FileInputStream(System.getProperty("user.home") + "/carmechanic.config");
