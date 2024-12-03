@@ -31,4 +31,13 @@ public class Employee extends Person {
         }
         return super.equals(obj);
     }
+
+    @Override
+    public String toString() {
+        return "Identification number: " + getIdNumber() + "\n" +
+        "Full name: " + getName() + "\n" +
+        "Phone number: " + getPhoneNumber() + "\n" +
+        "E-mail: " + getEmail() + "\n" +
+        "Position: " + position + "\n";
+    }
 }

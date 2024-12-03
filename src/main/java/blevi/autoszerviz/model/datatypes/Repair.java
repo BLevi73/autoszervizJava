@@ -67,6 +67,10 @@ public class Repair implements Serializable {
         this.usedParts = new ArrayList<>(usedParts);
     }
 
+    public void addPartToRepair(Part part) {
+        usedParts.add(part);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -77,5 +81,19 @@ public class Repair implements Serializable {
         }
         Repair casted = (Repair)obj;
         return repairId.equals(casted.repairId);
+    }
+    @Override
+    public String toString() {
+        String toPrint = "Repair ID: " + repairId + "\n" +
+        "Description: " + description + "\n" +
+        "Cost: " + cost + "\n" +
+        "Date: " + dateOfRepair + "\n" +
+        "Repaired car: " + "\n" +
+        repairedCar + "\n" +
+        "Used parts: " + "\n";
+        for (Part part : usedParts) {
+            toPrint = toPrint + "-----\n" + part.toString();
+        }
+        return toPrint;
     }
 }

@@ -81,4 +81,14 @@ public class Car implements Serializable {
         Car casted = (Car) obj;
         return licencePlate.equals(casted.licencePlate);
     }
+
+    @Override
+    public String toString() {
+        return "Licence plate: "  + licencePlate + "\n" +
+         "Model year: "  + modelYear + "\n" +
+        "Manufacturer: "  + manufacturer + "\n" +
+        "Model: "  + model + "\n" +
+        "Chassis type: "  + chassisType + "\n" +
+        "Horsepower: " + horsepower + "\n";
+        }
 }

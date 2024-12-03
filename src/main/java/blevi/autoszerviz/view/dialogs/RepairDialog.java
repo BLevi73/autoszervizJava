@@ -13,8 +13,8 @@ public class RepairDialog {
     private static JComboBox<String> descriptionOrdering;
     private static JComboBox<String> costOrdering;
     private static JComboBox<String> dateOrdering;
-    
     private static final String[] ORDERING = { "Exact", "Comes before", "Comes after" };
+    
     private RepairDialog() {
         throw new IllegalStateException();
     }

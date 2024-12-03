@@ -53,4 +53,12 @@ public class Part implements Serializable {
         Part casted = (Part)obj;
         return serialNumber.equals(casted.serialNumber);
     }
+
+    @Override
+    public String toString() {
+        return "Serial number: " + serialNumber + "\n" +
+        "Manufacturer: " + manufacturer + "\n" +
+        "Name: " + name + "\n" +
+        "Type: " + type + "\n";
+    }
 }

@@ -7,7 +7,6 @@ import javax.swing.table.AbstractTableModel;
 
 import blevi.autoszerviz.model.datatypes.Car;
 import blevi.autoszerviz.view.dialogs.CarDialog;
-import blevi.autoszerviz.view.dialogs.ClientDialog;
 
 public class CarData extends AbstractTableModel {
     private List<Car> cars;

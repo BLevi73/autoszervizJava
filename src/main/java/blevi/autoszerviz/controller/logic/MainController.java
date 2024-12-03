@@ -94,6 +94,10 @@ public class MainController {
         mainFrame.getMainPanel().getMainToolBar().getRemoveButton().addActionListener(new RemoveButtonListener(this));
         mainFrame.getMainPanel().getMainToolBar().getEditButton().addActionListener(new EditButtonListener(this));
         mainFrame.getMainPanel().getMainToolBar().getQueryButton().addActionListener(new QueryButtonListener(this));
+        mainFrame.getMainPanel().getMainToolBar().getDataViewButton().addActionListener(new ViewButtonListener(this));
+        mainFrame.getMainPanel().getMainToolBar().getAddCarToClientButton().addActionListener(new AddCarToClientListener(this));
+        mainFrame.getMainPanel().getMainToolBar().getSetRepairedCarButton().addActionListener(new SetRepairedCarListener(this));
+        mainFrame.getMainPanel().getMainToolBar().getAddPartToRepairButton().addActionListener(new AddPartToRepairListener(this));
     }
 
     /**
@@ -321,6 +325,21 @@ public class MainController {
      * Adds a new part to the data.
      */
     public void addPart() {
+        int returnVal = PartDialog.showAddPartDialog();
+        if (returnVal == JOptionPane.YES_OPTION) {
+            Part toAdd = new Part(PartDialog.getSerialNumberInputField().getText(),
+            PartDialog.getManufacturerInputField().getText(),
+            PartDialog.getNameInputField().getText(),
+            PartDialog.getTypeInputField().getText());
+            boolean operationSuccessful = true;
+            if (!data.addPart(toAdd)) {
+                operationSuccessful = false;
+            }
+            if (!operationSuccessful) {
+                JOptionPane.showMessageDialog(null, "This part is already in the database!", "Operation failed",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
         partData.fireTableDataChanged();
         updateInfo();
     }
@@ -336,6 +355,7 @@ public class MainController {
         Employee toRemove = new Employee(idNumber, null, null, null, null);
         data.removeEmployee(toRemove);
         employeeData.fireTableDataChanged();
+        updateInfo();
     }
 
     /**
@@ -348,6 +368,7 @@ public class MainController {
         Client toRemove = new Client(idNumber, null, null, null);
         data.removeClient(toRemove);
         clientData.fireTableDataChanged();
+        updateInfo();
     }
 
     /**
@@ -360,6 +381,7 @@ public class MainController {
         Car toRemove = new Car(licencePlate, null, null, null, null, null);
         data.removeCar(toRemove);
         carData.fireTableDataChanged();
+        updateInfo();
     }
 
     /**
@@ -372,6 +394,7 @@ public class MainController {
         Repair toRemove = new Repair(repairId, null, null, null);
         data.removeRepair(toRemove);
         repairData.fireTableDataChanged();
+        updateInfo();
     }
 
     /**
@@ -379,11 +402,12 @@ public class MainController {
      */
     public void removePart() {
         int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable().getSelectedRow();
-        String serialNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
+        String serialNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable()
                 .getValueAt(selectedRow, 0);
         Part toRemove = new Part(serialNumber, null, null, null);
         data.removePart(toRemove);
         partData.fireTableDataChanged();
+        updateInfo();
     }
 
     // Modifiers
@@ -497,8 +521,81 @@ public class MainController {
      * Modifies a part.
      */
     public void modifyPart() {
-
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable().getSelectedRow();
+        String serialNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable()
+                .getValueAt(selectedRow, 0);
+        Part finder = new Part(serialNumber, null, null, null);
+        Part toEdit = data.getParts().get(data.getParts().indexOf(finder));
+        int returnVal = PartDialog.showModifyPartDialog();
+        if(returnVal == JOptionPane.YES_OPTION) {
+            if (!PartDialog.getManufacturerInputField().getText().isBlank()) {
+                toEdit.setManufacturer(PartDialog.getManufacturerInputField().getText());
+            }
+            if (!PartDialog.getNameInputField().getText().isBlank()) {
+                toEdit.setName(PartDialog.getNameInputField().getText());
+            }
+            if (!PartDialog.getTypeInputField().getText().isBlank()) {
+                toEdit.setType(PartDialog.getTypeInputField().getText());
+            }
+        }
         partData.fireTableDataChanged();
+    }
+
+    //Detail viewers
+    /**
+     * Shows a detailed view of the selected employee.
+     */
+    public void viewEmployeeDetails() {
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable().getSelectedRow();
+        String idNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getEmployeesTable()
+                .getValueAt(selectedRow, 0);
+        Employee finder = new Employee(idNumber, null, null, null, null);
+        Employee toPrint = data.getEmployees().get(data.getEmployees().indexOf(finder));
+        ViewDetailsFrame detailsFrame = new ViewDetailsFrame();
+        detailsFrame.getTextArea().setText(toPrint.toString());
+    }
+
+    /**
+     * Shows a detailed view of the selected client.
+     */
+    public void viewClientDetails() {
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable().getSelectedRow();
+        String idNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable()
+                .getValueAt(selectedRow, 0);
+        Client finder = new Client(idNumber, null, null, null);
+        Client toPrint = data.getClients().get(data.getClients().indexOf(finder));
+        ViewDetailsFrame detailsFrame = new ViewDetailsFrame();
+        detailsFrame.getTextArea().setText(toPrint.toString());
+    }
+
+    public void viewCarDetails() {
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable().getSelectedRow();
+        String licencePlate = (String) mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable()
+                .getValueAt(selectedRow, 0);
+        Car finder = new Car(licencePlate, null, null, null, null, null);
+        Car toPrint = data.getCars().get(data.getCars().indexOf(finder));
+        ViewDetailsFrame detailsFrame = new ViewDetailsFrame();
+        detailsFrame.getTextArea().setText(toPrint.toString());
+    }
+
+    public void viewRepairDetails() {
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
+        String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
+                .getValueAt(selectedRow, 0);
+        Repair finder = new Repair(repairId, null, null, null);
+        Repair toPrint = data.getRepairs().get(data.getRepairs().indexOf(finder));
+        ViewDetailsFrame detailsFrame = new ViewDetailsFrame();
+        detailsFrame.getTextArea().setText(toPrint.toString());
+    }
+
+    public void viewPartDetails() {
+        int selectedRow = mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable().getSelectedRow();
+        String serialNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable()
+                .getValueAt(selectedRow, 0);
+        Part finder = new Part(serialNumber, null, null, null);
+        Part toPrint = data.getParts().get(data.getParts().indexOf(finder));
+        ViewDetailsFrame detailsFrame = new ViewDetailsFrame();
+        detailsFrame.getTextArea().setText(toPrint.toString());
     }
 
     // Query creators
@@ -590,6 +687,7 @@ public class MainController {
             filteredData = repairData.getFilteredData(filter);
             QueryFrame queryFrame = new QueryFrame();
             queryFrame.getTable().setModel(filteredData);
+            queryFrame.getFoundRecords().setText("Found records: " + Integer.toString(filteredData.getRowCount()));
         }
     }
 
@@ -597,6 +695,62 @@ public class MainController {
      * Creates a query for parts.
      */
     public void createPartQuery() {
+        int returnVal = PartDialog.showQueryPartDialog();
+        Part filter;
+        PartData filteredData;
+        if (returnVal == JOptionPane.YES_OPTION) {
+            String serialNumber = PartDialog.getSerialNumberInputField().getText();
+            String manufacturer = PartDialog.getManufacturerInputField().getText();
+            String name = PartDialog.getNameInputField().getText();
+            String type = PartDialog.getTypeInputField().getText();
+            filter = new Part(serialNumber, manufacturer, name, type);
+            filteredData = partData.getFilteredData(filter);
+            QueryFrame queryFrame = new QueryFrame();
+            queryFrame.getTable().setModel(filteredData);
+            queryFrame.getFoundRecords().setText("Found records: " + Integer.toString(filteredData.getRowCount()));
+        }
+    }
 
+    //Connectors
+    public void addCarToClient() {
+        int selectedRowInClients = mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable().getSelectedRow();
+        String idNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getClientsTable()
+                .getValueAt(selectedRowInClients, 0);
+        Client clientFinder = new Client(idNumber, null, null, null);
+        Client client = data.getClients().get(data.getClients().indexOf(clientFinder));
+        int selectedRowInCars = mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable().getSelectedRow();
+        String licencePlate = (String) mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable()
+                .getValueAt(selectedRowInCars, 0);
+        Car carFinder = new Car(licencePlate, null, null, null, null, null);
+        Car toAddToClient = data.getCars().get(data.getCars().indexOf(carFinder));
+        client.addCar(toAddToClient);
+    }
+
+    public void setRepairedCar() {
+        int selectedRowInRepairs = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
+        String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
+                .getValueAt(selectedRowInRepairs, 0);
+        Repair finder = new Repair(repairId, null, null, null);
+        Repair repair = data.getRepairs().get(data.getRepairs().indexOf(finder));
+        int selectedRowInCars = mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable().getSelectedRow();
+        String licencePlate = (String) mainFrame.getMainPanel().getTablesTabbedPane().getCarsTable()
+                .getValueAt(selectedRowInCars, 0);
+        Car carFinder = new Car(licencePlate, null, null, null, null, null);
+        Car toSetForRepair = data.getCars().get(data.getCars().indexOf(carFinder));
+        repair.setRepairedCar(toSetForRepair);
+    }
+
+    public void addPartToRepair() {
+        int selectedRowInRepairs = mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable().getSelectedRow();
+        String repairId = (String) mainFrame.getMainPanel().getTablesTabbedPane().getRepairsTable()
+                .getValueAt(selectedRowInRepairs, 0);
+        Repair repairFinder = new Repair(repairId, null, null, null);
+        Repair repair = data.getRepairs().get(data.getRepairs().indexOf(repairFinder));
+        int selectedRowInParts = mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable().getSelectedRow();
+        String serialNumber = (String) mainFrame.getMainPanel().getTablesTabbedPane().getPartsTable()
+                .getValueAt(selectedRowInParts, 0);
+        Part partFinder = new Part(serialNumber, null, null, null);
+        Part toAddToRepair = data.getParts().get(data.getParts().indexOf(partFinder));
+        repair.addPartToRepair(toAddToRepair);
     }
 }
